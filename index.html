@@ -389,116 +389,129 @@
     opacity: 0.85;
   }
 
-  /* =========================================================
-     MEDIA CONTAINER (CAROUSEL / SINGLE / EMPTY)
-  ========================================================= */
-  .media-container.is-empty { display: none; }
+ /* =========================================================
+   MEDIA CONTAINER (CAROUSEL / SINGLE / EMPTY)
+========================================================= */
 
-  /* Shrink carousel to half width */
-.media-container.is-carousel {
+.media-container.is-empty {
+  display: none;
+}
+
+/* Shared sizing + vertical positioning */
+.media-container.is-carousel,
+.media-container.is-single {
+  position: relative;
+  padding: 0;
   max-width: 75%;
-  margin: 100px auto 0; /* 👈 moves it DOWN */
+  margin: 32px auto 0; /* 👈 unified vertical offset */
 }
-,
-  .media-container.is-single {
-    position: relative;
-    padding: 0;
-  }
 
-  .thumb-image-wrap {
-    position: relative;
-    background: #000;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-  }
-
-  /* hide indicators per requirement */
-  //.media-container.is-carousel .carousel-indicators { display: flex !important; }
-
-  .media-container.is-carousel .carousel,
-  .media-container.is-carousel .carousel-inner,
-  .media-container.is-carousel .carousel-item {
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-
-  .media-container.is-carousel .carousel-item { background: #000; }
-
-  .media-container.is-carousel img,
-  .media-container.is-single img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .media-container.is-carousel .carousel-caption {
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 10px 14px;
-    text-align: left;
-    background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
-  }
-
-  .thumb-image-wrap button {
-    position: absolute;
-    right: 14px;
-    bottom: 14px;
-    border-radius: 4px;
-    border: 0;
-    background-color: rgba(255,255,255,0.4);
-    color: #fff;
-    padding: 2px 6px;
-    cursor: pointer;
-    font-size: 12px;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    backdrop-filter: blur(4px);
-    z-index: 5;
-  }
-
-  .thumb-image-wrap button:hover {
-    background-color: rgba(48,123,225,0.85);
-  }
-
-  /* SINGLE IMAGE caption bar */
-  .media-container.is-single .single-hero {
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    background: #000;
-    position: relative;
-max-width: 75%;
-  margin: 100px auto 0; /* 👈 moves it DOWN */
+/* Image wrapper */
+.thumb-image-wrap {
+  position: relative;
+  background: #000;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
 }
-  }
 
-  .media-container.is-single .single-caption {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 10px 14px;
-    color: #fff;
-    text-align: left;
-    font-weight: 600;
-    background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
-    pointer-events: none;
-    z-index: 4;
-  }
-  .media-container.is-carousel .carousel-indicators{
-    margin-bottom: 10px;
- }
+/* Carousel structure */
+.media-container.is-carousel .carousel,
+.media-container.is-carousel .carousel-inner,
+.media-container.is-carousel .carousel-item {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
 
-  .media-container.is-carousel .carousel-indicators [data-bs-target]{
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    opacity: 0.6;
- }
+.media-container.is-carousel .carousel-item {
+  background: #000;
+}
 
-.media-container.is-carousel .carousel-indicators .active{
+/* Shared image behavior */
+.media-container.is-carousel img,
+.media-container.is-single img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Carousel caption */
+.media-container.is-carousel .carousel-caption {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 14px;
+  text-align: left;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.85),
+    rgba(0,0,0,0)
+  );
+}
+
+/* Fullscreen button */
+.thumb-image-wrap button {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  border-radius: 4px;
+  border: 0;
+  background-color: rgba(255,255,255,0.4);
+  color: #fff;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  backdrop-filter: blur(4px);
+  z-index: 5;
+}
+
+.thumb-image-wrap button:hover {
+  background-color: rgba(48,123,225,0.85);
+}
+
+/* SINGLE IMAGE */
+.media-container.is-single .single-hero {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #000;
+  position: relative;
+}
+
+/* SINGLE caption */
+.media-container.is-single .single-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 14px;
+  color: #fff;
+  text-align: left;
+  font-weight: 600;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.85),
+    rgba(0,0,0,0)
+  );
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Carousel indicators */
+.media-container.is-carousel .carousel-indicators {
+  margin-bottom: 10px;
+}
+
+.media-container.is-carousel .carousel-indicators [data-bs-target] {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.media-container.is-carousel .carousel-indicators .active {
   opacity: 1;
 }
 
@@ -821,7 +834,7 @@ max-width: 75%;
           label: "Pitot-static Instruments",
           imagePath: "Discuss2.png",
           heading: "Pitot-static Instruments",
-          bullets: ["Indicators", "Errors"],
+          bullets: ["Indicators", "Errors", "Review Carefully"],
           images: [
             { title: "Altimeter & VSI", src: "PFDPitotStatic Instruments.png", alt: "Altimeter and VSI reference." },
             { title: "Pitot Static System", src: "PitotCHAK.png", alt: "Pitot-static system reference." }
