@@ -114,7 +114,24 @@
   /* =========================================================
      SPLASH
   ========================================================= */
-  .splash-inner {
+
+.page-splash{
+  /* Use the provided splash image as the page background */
+  background-image: url("Lesson_4_Splash.png");
+  background-size: cover;          /* fills the area */
+  background-position: center;     /* keep centered */
+  background-repeat: no-repeat;
+}
+
+/* Keep your existing layout */
+.splash-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
+}  
+.splash-inner {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -182,6 +199,12 @@
     outline: 3px solid rgba(48,123,225,0.6);
     outline-offset: 2px;
   }
+/* Move subtitle + button down on the splash */
+.page-splash .splash-inner{
+  justify-content: flex-start;   /* stop vertical centering */
+  padding-top: 60vh;             /* push content down */
+}
+
 
   /* =========================================================
      LESSON LAYOUT / MENU
@@ -371,7 +394,12 @@
   ========================================================= */
   .media-container.is-empty { display: none; }
 
-  .media-container.is-carousel,
+  /* Shrink carousel to half width */
+.media-container.is-carousel {
+  max-width: 75%;
+  margin: 100px auto 0; /* 👈 moves it DOWN */
+}
+,
   .media-container.is-single {
     position: relative;
     padding: 0;
@@ -653,6 +681,7 @@
 .task-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .task-table { min-width: 720px; }
 
+.splash-lesson-wordmark { display: none; }
 
 
 </style>
@@ -670,22 +699,18 @@
 
     <main>
       <section class="page page-splash is-active" id="pageSplash" aria-label="Lesson 4 splash">
-        <div class="splash-inner">
-          <div>
-            <div class="splash-lesson-wordmark">
-              LESSON <span class="lesson-number">4</span>
-            </div>
-          </div>
-          <div>
-            <p class="splash-subtitle">
-              <strong>Sim Lesson:</strong> Intro to Partial Panel Flight
-            </p>
-            <div class="splash-actions">
-              <button type="button" class="btn-primary" id="startBriefBtn">Start the Brief</button>
-            </div>
-          </div>
-        </div>
-      </section>
+  <div class="splash-inner">
+    <div>
+      <p class="splash-subtitle">
+        <strong>Sim Lesson:</strong> Intro to Partial Panel Flight
+      </p>
+      <div class="splash-actions">
+        <button type="button" class="btn-primary" id="startBriefBtn">Start the Brief</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       <section class="page page-lesson" id="pageLesson" aria-label="Lesson 4 brief">
         <div class="lesson-layout">
