@@ -103,7 +103,7 @@ main {
    SPLASH
 ========================================================= */
 .page-splash{
-  background-image: url("assets/images/Lesson_4_Splash.png");
+  background-image: url("assets/images/splash.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -1,130 +1,142 @@
 (function () {
   "use strict";
 
-  const STORAGE_PREFIX = "lesson4_check_";
+  // Standardize per-lesson storage prefix so checklist state never collides across lessons
+  const STORAGE_PREFIX = "lesson1_check_";
 
   const img = (file) => `assets/images/${file}`;
 
+  // STANDARD ICON MAP (use this same block in every lesson app.js)
+  // Your outline ALL CAPS keyword maps to these filenames.
+  const ICON = {
+    BRIEF: "Brief.png",
+    DETERMINE: "Determine.png",
+    DISCUSS: "Discuss.png",
+    PREVIEW: "Preview.png",
+    REVIEW: "Review.png",
+    LIST: "List.png",
+    DESCRIBE: "Describe.png",
+  };
+
+  // Helper: derive display title from filename (remove extension if present)
+  function titleFromFilename(filename) {
+    if (!filename) return "";
+    return filename.replace(/\.[^/.]+$/, "");
+  }
+
+  // LESSON 1 TOPICS (content swap only)
+  // NOTE: Filenames must match exactly (including spaces/case/extensions).
+  // If your real files are .jpg/.bmp/etc, update the src strings accordingly.
   const topics = [
     {
-      id: "flight-instrument-failures",
-      label: "Flight Instrument Failures",
-      imagePath: img("Discuss2.png"),
-      heading: "Flight Instrument Failures",
-      bullets: [
-        "Identification",
-        "Procedures / checklists",
-        "Operations with failed instruments",
-        "Resources and options available"
+      id: "private-pilot-certificate",
+      label: "Private Pilot Certificate",
+      imagePath: img(ICON.DISCUSS),
+      heading: "Private Pilot Certificate",
+      bullets: ["Privileges", "Limitations"],
+      images: [
+        {
+          title: titleFromFilename("Private Pilot Limitations.png"),
+          src: img("Private Pilot Limitations.png"),
+          alt: titleFromFilename("Private Pilot Limitations.png"),
+        },
       ],
-      images: [
-        { title: "ADC failure", src: img("ADC Failure.png"), alt: "Primary flight display with failure indication." },
-        { title: "AHRS failure", src: img("AHRS failure.bmp"), alt: "Cockpit displays with attitude and heading reference issues." },
-        { title: "Magnetometer failure", src: img("Magnetometer failure.png"), alt: "Flight instruments with compass and heading indicators." },
-        { title: "PFD failure", src: img("PFD Failure.png"), alt: "Panel with one display dark and backup instruments active." }
-      ]
     },
+
     {
-      id: "standby-instruments",
-      label: "Standby Instruments & Reversionary Mode",
-      imagePath: img("Discuss2.png"),
-      heading: "Standby Instruments & Reversionary Mode",
-      bullets: [
-        "Pressing Display Backup",
-        "System redundancy",
-        "Applicable procedures"
+      id: "required-documents",
+      label: "Required Documents",
+      imagePath: img(ICON.BRIEF),
+      heading: "Required Documents",
+      bullets: ["Documents required to exercise private pilot privileges"],
+      images: [
+        {
+          title: titleFromFilename("Requirements for Certificates.png"),
+          src: img("Requirements for Certificates.png"),
+          alt: titleFromFilename("Requirements for Certificates.png"),
+        },
+        {
+          title: titleFromFilename("FAA Pilot Certificate.png"),
+          src: img("FAA Pilot Certificate.png"),
+          alt: titleFromFilename("FAA Pilot Certificate.png"),
+        },
+        {
+          title: titleFromFilename("ARROW.png"),
+          src: img("ARROW.png"),
+          alt: titleFromFilename("ARROW.png"),
+        },
       ],
-      images: [
-        { title: "Reversionary Mode", src: img("PFD Failure.png"), alt: "Panel with one display dark and backup instruments active." }
-      ]
     },
+
     {
-      id: "baif-sequence-3",
-      label: "BAIF Sequence 3",
-      imagePath: img("Preview.png"),
-      heading: "BAIF Sequence 3",
-      bullets: ["Procedures", "Route", "Potential challenges"],
+      id: "medical-certificates",
+      label: "Medical Certificates",
+      imagePath: img(ICON.DISCUSS),
+      heading: "Medical Certificates",
+      bullets: ["Process to obtain", "Different types", "Privileges", "Expiration"],
       images: [
-        { title: "Baif Sequence 3", src: img("BAIF3.png"), alt: "BAIF Sequence 3 overview." }
-      ]
-    },
-    {
-      id: "pitot-static-system",
-      label: "Pitot-Static System",
-      imagePath: img("Discuss2.png"),
-      heading: "Pitot-Static System",
-      bullets: ["System function", "System components", "System limitations and failures"],
-      images: [
-        { title: "Pitot Static System", src: img("PitotStaticCHAK.png"), alt: "Pitot-static system diagram." },
-        { title: "ADAHRS", src: img("PiotStaticADAHRS.png"), alt: "ADAHRS relationship to pitot-static system." }
-      ]
-    },
-    {
-      id: "pitot-static-instruments",
-      label: "Pitot-static Instruments",
-      imagePath: img("Discuss2.png"),
-      heading: "Pitot-static Instruments",
-      bullets: ["Indicators", "Errors", "Review Carefully"],
-      images: [
-        { title: "Altimeter & VSI", src: img("PFDPitotStatic Instruments.png"), alt: "Altimeter and VSI reference." },
-        { title: "Pitot Static System", src: img("PitotCHAK.png"), alt: "Pitot-static system reference." }
-      ]
-    },
-    {
-      id: "crm",
-      label: "Crew Resources Management",
-      imagePath: img("Discuss2.png"),
-      heading: "Crew Resources Management",
-      bullets: [
-        "Define roles and responsibilities in abnormal situations",
-        "Brief communication expectations",
-        "Use all available resources, including ATC and passengers",
-        "Manage workload and avoid fixation"
+        {
+          title: titleFromFilename("Med Express.png"),
+          src: img("Med Express.png"),
+          alt: titleFromFilename("Med Express.png"),
+        },
+        {
+          title: titleFromFilename("Basic Med_What.png"),
+          src: img("Basic Med_What.png"),
+          alt: titleFromFilename("Basic Med_What.png"),
+        },
       ],
+    },
+
+    {
+      id: "record-keeping-logbook",
+      label: "Record keeping/logbook",
+      imagePath: img(ICON.DISCUSS),
+      heading: "Record keeping/logbook",
+      bullets: ["What are the requirements for currency?"],
       images: [
-        { title: "Aircraft in IMC", src: img("IMC CockpitView.png"), alt: "Aircraft cockpit view in IMC." }
-      ]
-    },
-    {
-      id: "flight-mission",
-      label: "Flight Mission",
-      imagePath: img("Brief3.png"),
-      heading: "Flight Mission",
-      bullets: [
-        "Preview Lesson Tasks",
-        "Discuss New Elements",
-        "Develop a plan of action",
-        "Complete PAVE Checklists",
-        "Pilot",
-        "Aircraft",
-        "enVironment",
-        "External Factors"
+        {
+          title: titleFromFilename("Logbook Requirements.png"),
+          src: img("Logbook Requirements.png"),
+          alt: titleFromFilename("Logbook Requirements.png"),
+        },
+        {
+          title: titleFromFilename("Pilot Logbook.png"),
+          src: img("Pilot Logbook.png"),
+          alt: titleFromFilename("Pilot Logbook.png"),
+        },
       ],
-      checklistLastN: 4,
-      checklistHeader: "PAVE",
-      images: []
     },
+
     {
-      id: "task-matrix",
-      label: "Task Matrix",
-      imagePath: img("Preview.png"),
-      heading: "Task Matrix",
-      bullets: [],
-      images: [],
-      table: {
-        columns: ["Flight Task", "Performance Score", "Score Definition"],
-        rows: [
-          ["PERFORM Flight Deck Check", "2", "Considerable Assistance"],
-          ["PERFORM Standard Rate Turn", "3", "Minimal Assistance"],
-          ["PERFORM Constant Rate & Airspeed Climbs & Descents", "3", "Minimal Assistance"],
-          ["PERFORM Attitude Instrument Flight", "3", "Minimal Assistance"],
-          ["RECOVER From Unusual Attitudes", "3", "Minimal Assistance"],
-          ["TRACK Nav System", "3", "Minimal Assistance"],
-          ["MANAGE Flight Instrument Failure", "1", "Instructor Guided"],
-          ["MANAGE Flight By Reference to Standby Instruments", "1", "Instructor Guided"]
-        ]
-      }
-    }
+      id: "certification-requirements",
+      label: "Certification Requirements",
+      imagePath: img(ICON.PREVIEW),
+      heading: "Certification Requirements",
+      bullets: ["What are the certificate requirements for a private pilot?"],
+      images: [
+        {
+          title: titleFromFilename("Eligibility Requirements.png"),
+          src: img("Eligibility Requirements.png"),
+          alt: titleFromFilename("Eligibility Requirements.png"),
+        },
+        {
+          title: titleFromFilename("Aeronautical Knowledge Requirements.png"),
+          src: img("Aeronautical Knowledge Requirements.png"),
+          alt: titleFromFilename("Aeronautical Knowledge Requirements.png"),
+        },
+        {
+          title: titleFromFilename("Flight Proficiency.png"),
+          src: img("Flight Proficiency.png"),
+          alt: titleFromFilename("Flight Proficiency.png"),
+        },
+        {
+          title: titleFromFilename("Private Pilot Certification Requirements.png"),
+          src: img("Private Pilot Certification Requirements.png"),
+          alt: titleFromFilename("Private Pilot Certification Requirements.png"),
+        },
+      ],
+    },
   ];
 
   const pageSplash     = document.getElementById("pageSplash");
