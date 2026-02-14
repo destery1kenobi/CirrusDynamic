@@ -78,6 +78,15 @@ body {
   font-weight: 600;
 }
 
+
+
+  /* Footer PNG logo (preferred). Falls back to text if PNG not found. */
+  .brand-logo-img {
+    height: 26px;
+    width: auto;
+    display: none; /* shown after successful load (see onload handler) */
+    object-fit: contain;
+  }
 /* =========================================================
    MAIN / PAGES
 ========================================================= */
@@ -88,7 +97,7 @@ main {
   padding: 24px 40px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 820px) {
   main { padding: 20px 16px; }
 }
 
@@ -103,8 +112,9 @@ main {
    SPLASH
 ========================================================= */
 .page-splash{
-  background-image: url("assets/images/splash.png");
-  background-size: cover;
+  background-image: url("assets/images/Lesson_4_Splash.png");
+  background-color: var(--cirrus-navy); /* Prevent letterbox from looking like a bug */
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -194,7 +204,7 @@ main {
   margin-top: 4px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 820px) {
   .lesson-layout {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto auto;
