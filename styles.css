@@ -114,11 +114,12 @@ main {
 ========================================================= */
 .page-splash{
   background-image: url("assets/images/splash.png");
-  background-color: var(--cirrus-navy);
-  background-size: contain;
+  background-size: contain; /* Prevent horizontal cropping */
+  background-color: #ffffff; /* White letterboxing instead of navy */
   /* FIX: Prevent splash artwork from cropping in iframe/aspect-ratio changes */
   background-position: center;
   background-repeat: no-repeat;
+
 }
 
 .splash-inner {
