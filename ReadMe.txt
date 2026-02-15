@@ -55,6 +55,9 @@ CURRENT FEATURES / BEHAVIOR
 ------------------------------------------------------------
 
 - Splash screen with “Start the Brief” transition into the lesson
+- Splash uses background-size: contain to prevent left/right cropping.
+- This ensures the full image remains visible across iframe and iPad landscape viewports.
+- Any unused space around the image defaults to white.
 - Left navigation menu to select briefing topics
 - Right content panel supports:
   - Bullet lists (two-column by default)
@@ -187,6 +190,14 @@ NOTES / CONSIDERATIONS
 - Filenames must match exactly; many hosts are case-sensitive.
 - Some images may use .bmp format; ensure the host supports it.
 - Clearing browser storage resets checklist progress.
+
+RESPONSIVE BEHAVIOR
+
+- The two-column layout remains side-by-side down to approximately 820px container width.
+- Stacking occurs only below that threshold.
+- Key layout spacing (padding and left navigation width) uses clamp() for smoother scaling across iframe and iPad landscape views.
+- All other layout behavior remains unchanged.
+
 
 ------------------------------------------------------------
 MAINTAINER
