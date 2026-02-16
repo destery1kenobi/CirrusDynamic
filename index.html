@@ -2,30 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Lesson 1 – Airplane Lesson: Welcome to Cirrus Life</title>
+  <title>Lesson 6 – Pre-Brief (1 hour)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-        crossorigin="anonymous">
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
   <div class="app-shell">
+
     <header class="brand-bar-top">
-      <div class="brand-bar-title">Lesson 1</div>
+  <div class="brand-bar-title" id="lessonNumber"></div>
+
+  <div class="brand-logo">
+    <img src="assets/images/logo.png" alt="Cirrus Logo" class="brand-logo-img">
+  </div>
 </header>
 
+
     <main>
-      <section class="page page-splash is-active" id="pageSplash" aria-label="Lesson 1 splash">
+      <section class="page page-splash is-active" id="pageSplash">
         <div class="splash-inner">
           <div>
-            <p class="splash-subtitle">
-              <strong>Airplane Lesson:</strong> Welcome to Cirrus Life
-            </p>
+            <p class="splash-subtitle" id="lessonSubtitle"></p>
             <div class="splash-actions">
               <button type="button" class="btn-primary" id="startBriefBtn">Start the Brief</button>
             </div>
@@ -33,14 +34,14 @@
         </div>
       </section>
 
-      <section class="page page-lesson" id="pageLesson" aria-label="Lesson 1 brief">
+      <section class="page page-lesson" id="pageLesson">
         <div class="lesson-layout">
-          <nav class="lesson-menu" aria-label="Briefing topics">
+          <nav class="lesson-menu">
             <div class="lesson-menu-heading">Briefing Topics</div>
             <ul class="lesson-menu-list" id="lessonMenuList"></ul>
           </nav>
 
-          <section class="lesson-content" aria-live="polite">
+          <section class="lesson-content">
             <h2 class="lesson-content-heading" id="contentHeading"></h2>
             <ul class="lesson-bullets" id="contentBullets"></ul>
             <div class="media-container" id="thumbGrid"></div>
@@ -49,33 +50,22 @@
       </section>
     </main>
 
-    <footer class="brand-bar-bottom">
-      <div class="brand-bar-title"></div>
-      
-      <div class="brand-logo">
-  <!-- ...logo img + fallback text... -->
-</div>
-
-    </footer>
+    <footer class="brand-bar-bottom"></footer>
   </div>
 
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <div class="lightbox-inner" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-inner">
       <div class="lightbox-top">
-        <div id="lightboxTitle">Image</div>
-        <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close fullscreen">×</button>
+        <div id="lightboxTitle"></div>
+        <button type="button" class="lightbox-close" id="lightboxClose">×</button>
       </div>
       <div class="lightbox-image-wrap">
         <img id="lightboxImage" src="" alt="">
       </div>
-      <div class="lightbox-caption" id="lightboxCaption"></div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-          crossorigin="anonymous"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

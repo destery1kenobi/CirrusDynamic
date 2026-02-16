@@ -81,7 +81,7 @@ body {
 
 .brand-logo-img {
   /* PNG logo sizing for footer (and future reuse) */
-  height: 28px;
+  height: 35px;
   width: auto;
   display: block;
 }
@@ -273,8 +273,8 @@ main {
 }
 
 .lesson-menu-icon {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -504,6 +504,22 @@ main {
   align-items: center;
   justify-content: center;
 }
+/* Indicator visibility: shadow only (preserves exact dot shape) */
+.media-container.is-carousel .carousel-indicators [data-bs-target] {
+  box-shadow: none; /* ensure we don't get the droplet effect */
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
+}
+/* When there are no bullets, center the media area vertically (keep heading in place) */
+.lesson-content.no-bullets .media-container.is-carousel,
+.lesson-content.no-bullets .media-container.is-single {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0; /* prevents extra top push when bullets are empty */
+}
+
+
 
 /* =========================================================
    TASK MATRIX TABLE

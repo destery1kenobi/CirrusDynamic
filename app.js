@@ -1,212 +1,210 @@
 (function () {
   "use strict";
 
-  // Standardize per-lesson storage prefix so checklist state never collides across lessons
-  const STORAGE_PREFIX = "lesson1_check_";
+  /* =========================================================
+     LESSON METADATA (Option 1)
+     - Keeps lesson number + subtitle centralized
+     - Prevents storage collisions across lessons
+  ========================================================= */
+  const LESSON = {
+    number: 6,
+    subtitle: "Pre-Brief (1 hour)",
+  };
 
+  const STORAGE_PREFIX = `lesson${LESSON.number}_check_`;
+
+  // Path helper (all images live here)
   const img = (file) => `assets/images/${file}`;
 
-  // STANDARD ICON MAP (use this same block in every lesson app.js)
-  // Your outline ALL CAPS keyword maps to these filenames.
+  // Icon mapping (must match files in assets/images/)
   const ICON = {
     BRIEF: "Brief.png",
     DETERMINE: "Determine.png",
     DISCUSS: "Discuss.png",
-    PREVIEW: "Preview.png",
-    REVIEW: "Review.png",
     LIST: "List.png",
     DESCRIBE: "Describe.png",
+    PREVIEW: "Preview.png",
+    REVIEW: "Review.png",
   };
 
-  // Helper: derive display title from filename (remove extension if present)
+  // Title derived from filename (no captions shown; title used in lightbox bar)
   function titleFromFilename(filename) {
     if (!filename) return "";
     return filename.replace(/\.[^/.]+$/, "");
   }
 
-  // LESSON 1 TOPICS (content swap only)
-  // NOTE: Filenames must match exactly (including spaces/case/extensions).
-  // If your real files are .jpg/.bmp/etc, update the src strings accordingly.
+  /* =========================================================
+     INJECT LESSON META INTO HTML
+  ========================================================= */
+  const elLessonNumber = document.getElementById("lessonNumber");
+  const elLessonSubtitle = document.getElementById("lessonSubtitle");
+
+  if (elLessonNumber) elLessonNumber.textContent = `Lesson ${LESSON.number}`;
+  if (elLessonSubtitle) elLessonSubtitle.textContent = LESSON.subtitle;
+
+  /* =========================================================
+     TOPICS – LESSON 6 (filenames EXACTLY as provided)
+  ========================================================= */
   const topics = [
     {
-      id: "private-pilot-certificate",
-      label: "Private Pilot Certificate",
-      imagePath: img(ICON.DISCUSS),
-      heading: "Private Pilot Certificate",
-      bullets: ["Privileges", "Limitations"],
+      id: "aerodynamics",
+      label: "Aerodynamics",
+      iconKey: "DISCUSS",
+      heading: "Aerodynamics",
+      bullets: [],
       images: [
-        {
-          title: titleFromFilename("Private Pilot Limitations.png"),
-          src: img("Private Pilot Limitations.png"),
-          alt: titleFromFilename("Private Pilot Limitations.png"),
-        },
+        "4_forces_of_flight.jpg",
+        "Static_Stability.png",
+        "Stalls_Coefficient_of_Lift.png",
+        "Aerodynamics_Affecting_Maneuvers.png",
+        "Gyroscopic_Precession.png",
+        "P-Factor.png",
+        "Awaiting Content.jpg", // placeholder slot
+        "Torque_Effect.png",
+        "Adverse-Yaw.png",
       ],
     },
 
     {
-      id: "required-documents",
-      label: "Required Documents",
-      imagePath: img(ICON.BRIEF),
-      heading: "Required Documents",
-      bullets: ["Documents required to exercise private pilot privileges"],
-      images: [
-        {
-          title: titleFromFilename("Requirements for Certificates.png"),
-          src: img("Requirements for Certificates.png"),
-          alt: titleFromFilename("Requirements for Certificates.png"),
-        },
-        {
-          title: titleFromFilename("FAA Pilot Certificate.png"),
-          src: img("FAA Pilot Certificate.png"),
-          alt: titleFromFilename("FAA Pilot Certificate.png"),
-        },
-        {
-          title: titleFromFilename("ARROW.png"),
-          src: img("ARROW.png"),
-          alt: titleFromFilename("ARROW.png"),
-        },
-      ],
+      id: "use-of-metars",
+      label: "Use of METARs",
+      iconKey: "DESCRIBE",
+      heading: "Use of METARs",
+      bullets: [],
+      images: ["METAR_decoder(1).png", "METAR_decoder(2).png", "METAR example.png"],
     },
 
     {
-      id: "medical-certificates",
-      label: "Medical Certificates",
-      imagePath: img(ICON.DISCUSS),
-      heading: "Medical Certificates",
-      bullets: ["Process to obtain", "Different types", "Privileges", "Expiration"],
-      images: [
-        {
-          title: titleFromFilename("Med Express.png"),
-          src: img("Med Express.png"),
-          alt: titleFromFilename("Med Express.png"),
-        },
-        {
-          title: titleFromFilename("Basic Med_What.png"),
-          src: img("Basic Med_What.png"),
-          alt: titleFromFilename("Basic Med_What.png"),
-        },
-      ],
+      id: "use-of-tafs",
+      label: "Use of TAFs",
+      iconKey: "DESCRIBE",
+      heading: "Use of TAFs",
+      bullets: [],
+      images: ["TAF_decoder.png", "TAF Example.jpg"],
     },
 
     {
-      id: "record-keeping-logbook",
-      label: "Record keeping/logbook",
-      imagePath: img(ICON.DISCUSS),
-      heading: "Record keeping/logbook",
-      bullets: ["What are the requirements for currency?"],
-      images: [
-        {
-          title: titleFromFilename("Logbook Requirements.png"),
-          src: img("Logbook Requirements.png"),
-          alt: titleFromFilename("Logbook Requirements.png"),
-        },
-        {
-          title: titleFromFilename("Pilot Logbook.png"),
-          src: img("Pilot Logbook.png"),
-          alt: titleFromFilename("Pilot Logbook.png"),
-        },
-      ],
+      id: "types-of-airspace",
+      label: "Types of Airspace",
+      iconKey: "DISCUSS",
+      heading: "Types of Airspace",
+      bullets: [],
+      images: ["Airspace_Classifications.png"],
     },
 
     {
-      id: "certification-requirements",
-      label: "Certification Requirements",
-      imagePath: img(ICON.PREVIEW),
-      heading: "Certification Requirements",
-      bullets: ["What are the certificate requirements for a private pilot?"],
-      images: [
-        {
-          title: titleFromFilename("Eligibility Requirements.png"),
-          src: img("Eligibility Requirements.png"),
-          alt: titleFromFilename("Eligibility Requirements.png"),
-        },
-        {
-          title: titleFromFilename("Aeronautical Knowledge Requirements.png"),
-          src: img("Aeronautical Knowledge Requirements.png"),
-          alt: titleFromFilename("Aeronautical Knowledge Requirements.png"),
-        },
-        {
-          title: titleFromFilename("Flight Proficiency.png"),
-          src: img("Flight Proficiency.png"),
-          alt: titleFromFilename("Flight Proficiency.png"),
-        },
-        {
-          title: titleFromFilename("Private Pilot Certification Requirements.png"),
-          src: img("Private Pilot Certification Requirements.png"),
-          alt: titleFromFilename("Private Pilot Certification Requirements.png"),
-        },
-      ],
+      id: "entering-operating-airspaces",
+      label: "Entering and Operating in Various Airspaces",
+      iconKey: "DESCRIBE",
+      heading: "Entering and Operating in Various Airspaces",
+      bullets: ["Requirements and limitations"],
+      images: ["VFR_Weather_Minimums.png", "Required_Equipment_for_Airspace_Entry.png"],
     },
-  ];
+  ].map((t) => ({
+    ...t,
+    imagePath: img(ICON[t.iconKey] || ICON.DISCUSS),
+    images: (t.images || []).map((file) => ({
+      title: titleFromFilename(file),
+      src: img(file),
+      alt: titleFromFilename(file),
+      file,
+    })),
+  }));
 
-  const pageSplash     = document.getElementById("pageSplash");
-  const pageLesson     = document.getElementById("pageLesson");
-  const startBriefBtn  = document.getElementById("startBriefBtn");
+  /* =========================================================
+     DOM HOOKS
+  ========================================================= */
+  const pageSplash = document.getElementById("pageSplash");
+  const pageLesson = document.getElementById("pageLesson");
+  const startBriefBtn = document.getElementById("startBriefBtn");
 
-  const menuList       = document.getElementById("lessonMenuList");
+  const menuList = document.getElementById("lessonMenuList");
   const contentHeading = document.getElementById("contentHeading");
   const contentBullets = document.getElementById("contentBullets");
-  const thumbGrid      = document.getElementById("thumbGrid");
+  const thumbGrid = document.getElementById("thumbGrid");
 
-  const lightbox         = document.getElementById("lightbox");
-  const lightboxClose    = document.getElementById("lightboxClose");
-  const lightboxImage    = document.getElementById("lightboxImage");
-  const lightboxTitle    = document.getElementById("lightboxTitle");
-  const lightboxCaption  = document.getElementById("lightboxCaption");
+  const lessonContent = document.querySelector(".lesson-content"); // ✅ for no-bullets state
 
-  const lightboxImageWrap = lightbox.querySelector(".lightbox-image-wrap");
+  const lightbox = document.getElementById("lightbox");
+  const lightboxClose = document.getElementById("lightboxClose");
+  const lightboxImage = document.getElementById("lightboxImage");
+  const lightboxTitle = document.getElementById("lightboxTitle");
 
-  let currentTopicId = topics[0].id;
+  const lightboxImageWrap = lightbox ? lightbox.querySelector(".lightbox-image-wrap") : null;
 
-  function clearMediaContainerClasses() {
-    thumbGrid.className = "media-container";
-  }
+  let currentTopicId = topics[0]?.id || "";
 
+  /* =========================================================
+     HELPERS
+  ========================================================= */
   function storageKey(topicId, idx) {
     return STORAGE_PREFIX + topicId + "_" + idx;
   }
 
-  /* =========================
-     BULLETS + OPTIONAL CHECKLIST
-  ========================= */
+  function clearMedia() {
+    if (!thumbGrid) return;
+    thumbGrid.innerHTML = "";
+    thumbGrid.className = "media-container";
+  }
+
+  /* =========================================================
+     BULLETS (default + optional checklist)
+     - Long bullets => single column (threshold 110)
+     - No punctuation changes
+     - NEW: when no bullets, add .no-bullets to .lesson-content
+  ========================================================= */
   function renderBullets(topic) {
+    if (!contentBullets) return;
+
     contentBullets.innerHTML = "";
     contentBullets.classList.remove("has-checklist");
+    contentBullets.classList.remove("is-single-column");
 
     const bullets = Array.isArray(topic.bullets) ? topic.bullets : [];
-    const checklistLastN = Number.isFinite(topic.checklistLastN) ? Math.max(0, topic.checklistLastN) : 0;
+
+    // ✅ NEW: flag no-bullets state for vertical centering behavior
+    if (lessonContent) lessonContent.classList.toggle("no-bullets", bullets.length === 0);
 
     if (!bullets.length) return;
 
+    // Auto single-column when any bullet is "long"
+    const LONG_BULLET_THRESHOLD = 110;
+    const hasLongBullet = bullets.some((b) => (b || "").length > LONG_BULLET_THRESHOLD);
+    if (hasLongBullet) contentBullets.classList.add("is-single-column");
+
+    // Optional checklist feature (not used in Lesson 6 but preserved baseline)
+    const checklistLastN = Number.isFinite(topic.checklistLastN)
+      ? Math.max(0, topic.checklistLastN)
+      : 0;
     const checklistCount = Math.min(checklistLastN, bullets.length);
     const checklistStart = bullets.length - checklistCount;
 
-    const frag = document.createDocumentFragment();
-
     bullets.forEach((text, i) => {
-      if (i < checklistStart) {
+      // normal bullet
+      if (!checklistCount || i < checklistStart) {
         const li = document.createElement("li");
         li.textContent = text;
-        frag.appendChild(li);
+        contentBullets.appendChild(li);
         return;
       }
 
+      // checklist mode
       contentBullets.classList.add("has-checklist");
 
       if (i === checklistStart) {
         const headerLi = document.createElement("li");
         headerLi.className = "checklist-header";
         headerLi.textContent = (topic.checklistHeader || "CHECKLIST").toUpperCase();
-        frag.appendChild(headerLi);
+        contentBullets.appendChild(headerLi);
       }
 
       const li = document.createElement("li");
       li.className = "check-row";
 
-      const checkboxId = `chk_${topic.id}_${i}`;
+      const id = `chk_${topic.id}_${i}`;
       const input = document.createElement("input");
       input.type = "checkbox";
-      input.id = checkboxId;
+      input.id = id;
 
       const saved = localStorage.getItem(storageKey(topic.id, i));
       if (saved === "1") {
@@ -215,7 +213,7 @@
       }
 
       const label = document.createElement("label");
-      label.setAttribute("for", checkboxId);
+      label.setAttribute("for", id);
       label.textContent = text;
 
       input.addEventListener("change", () => {
@@ -225,65 +223,61 @@
 
       li.appendChild(input);
       li.appendChild(label);
-      frag.appendChild(li);
+      contentBullets.appendChild(li);
     });
-
-    contentBullets.appendChild(frag);
   }
 
-  /* =========================
-     TASK MATRIX TABLE
-  ========================= */
-  function buildTaskTable(table) {
-    const wrap = document.createElement("div");
-    wrap.className = "task-table-wrap";
+  /* =========================================================
+     LIGHTBOX (title bar only, no captions)
+  ========================================================= */
+  function openLightbox(imgData) {
+    if (!lightbox || !lightboxImage || !lightboxTitle) return;
 
-    const scroll = document.createElement("div");
-    scroll.className = "task-table-scroll";
+    lightboxTitle.textContent = imgData.title || "Image";
+    lightboxImage.classList.remove("is-visible");
+    lightboxImage.src = "";
+    lightboxImage.alt = imgData.alt || imgData.title || "";
 
-    const t = document.createElement("table");
-    t.className = "task-table";
+    lightbox.classList.add("is-visible");
 
-    const thead = document.createElement("thead");
-    const trh = document.createElement("tr");
-    (table.columns || []).forEach(col => {
-      const th = document.createElement("th");
-      th.textContent = col;
-      trh.appendChild(th);
-    });
-    thead.appendChild(trh);
-
-    const tbody = document.createElement("tbody");
-    (table.rows || []).forEach(row => {
-      const tr = document.createElement("tr");
-      row.forEach((cell) => {
-        const td = document.createElement("td");
-        td.textContent = cell;
-        tr.appendChild(td);
-      });
-      tbody.appendChild(tr);
-    });
-
-    t.appendChild(thead);
-    t.appendChild(tbody);
-    scroll.appendChild(t);
-    wrap.appendChild(scroll);
-    return wrap;
+    const pre = new Image();
+    pre.onload = () => {
+      lightboxImage.src = imgData.src;
+      requestAnimationFrame(() => lightboxImage.classList.add("is-visible"));
+    };
+    pre.onerror = () => {
+      lightboxImage.src = imgData.src;
+      requestAnimationFrame(() => lightboxImage.classList.add("is-visible"));
+    };
+    pre.src = imgData.src;
   }
 
-  /* =========================
-     MEDIA: Carousel / Single / Empty / Table
-  ========================= */
+  function closeLightbox() {
+    if (!lightbox || !lightboxImage) return;
+    lightbox.classList.remove("is-visible");
+    lightboxImage.classList.remove("is-visible");
+  }
+
+  /* =========================================================
+     CAROUSEL BUILDER (POC feature-complete)
+     - indicators + prev/next controls
+     - fullscreen button overlay
+     - click image opens lightbox
+     - no captions
+  ========================================================= */
   function buildBootstrapCarousel(images) {
     const carouselId = "topicCarousel";
+
     const carousel = document.createElement("div");
     carousel.id = carouselId;
     carousel.className = "carousel slide";
     carousel.setAttribute("data-bs-touch", "true");
 
+    // Indicators
     const indicators = document.createElement("div");
     indicators.className = "carousel-indicators";
 
+    // Inner
     const inner = document.createElement("div");
     inner.className = "carousel-inner";
 
@@ -304,34 +298,30 @@
 
       const imageEl = document.createElement("img");
       imageEl.className = "d-block w-100";
-      imageEl.onerror = function () {
-        this.src = `https://placehold.co/1200x675/0F2438/ffffff?text=${encodeURIComponent(imgData.title || "Image")}`;
-      };
       imageEl.src = imgData.src;
       imageEl.alt = imgData.alt || imgData.title || "Lesson image";
 
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.setAttribute("aria-label", "Open fullscreen view for " + (imgData.title || "image"));
-      btn.innerHTML = '<span>⤢</span>';
-      btn.addEventListener("click", (e) => {
+      // Fullscreen button (bottom-right)
+      const fsBtn = document.createElement("button");
+      fsBtn.type = "button";
+      fsBtn.setAttribute("aria-label", "Open fullscreen view");
+      fsBtn.innerHTML = "<span>⤢</span>";
+      fsBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         openLightbox(imgData);
       });
 
-      wrap.appendChild(imageEl);
-      wrap.appendChild(btn);
+      // Click image area => open lightbox
       wrap.addEventListener("click", () => openLightbox(imgData));
 
-      const caption = document.createElement("div");
-      caption.className = "carousel-caption d-none d-md-block";
-      caption.innerHTML = `<div style="font-weight:600">${imgData.title || ""}</div>`;
+      wrap.appendChild(imageEl);
+      wrap.appendChild(fsBtn);
 
       item.appendChild(wrap);
-      item.appendChild(caption);
       inner.appendChild(item);
     });
 
+    // Prev/Next controls
     const prev = document.createElement("button");
     prev.className = "carousel-control-prev";
     prev.type = "button";
@@ -364,46 +354,80 @@
     wrap.className = "thumb-image-wrap";
 
     const imageEl = document.createElement("img");
-    imageEl.onerror = function () {
-      this.src = `https://placehold.co/1200x675/0F2438/ffffff?text=${encodeURIComponent(imgData.title || "Image")}`;
-    };
     imageEl.src = imgData.src;
     imageEl.alt = imgData.alt || imgData.title || "Lesson image";
 
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.setAttribute("aria-label", "Open fullscreen view for " + (imgData.title || "image"));
-    btn.innerHTML = '<span>⤢</span>';
-    btn.addEventListener("click", (e) => {
+    const fsBtn = document.createElement("button");
+    fsBtn.type = "button";
+    fsBtn.setAttribute("aria-label", "Open fullscreen view");
+    fsBtn.innerHTML = "<span>⤢</span>";
+    fsBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       openLightbox(imgData);
     });
 
     wrap.appendChild(imageEl);
-    wrap.appendChild(btn);
+    wrap.appendChild(fsBtn);
+
     wrap.addEventListener("click", () => openLightbox(imgData));
 
     hero.appendChild(wrap);
-
-    const caption = document.createElement("div");
-    caption.className = "single-caption";
-    caption.textContent = imgData.title || "";
-    hero.appendChild(caption);
-
     return hero;
   }
 
+  /* =========================================================
+     OPTIONAL TABLE (kept for baseline completeness)
+  ========================================================= */
+  function buildTable(table) {
+    const wrap = document.createElement("div");
+    wrap.className = "task-table-wrap";
+
+    const tbl = document.createElement("table");
+    tbl.className = "task-table";
+
+    const thead = document.createElement("thead");
+    const trh = document.createElement("tr");
+    (table.headers || []).forEach((h) => {
+      const th = document.createElement("th");
+      th.textContent = h;
+      trh.appendChild(th);
+    });
+    thead.appendChild(trh);
+
+    const tbody = document.createElement("tbody");
+    (table.rows || []).forEach((row) => {
+      const tr = document.createElement("tr");
+      row.forEach((cell, idx) => {
+        const td = document.createElement("td");
+        td.textContent = cell;
+        tr.appendChild(td);
+        if (idx === 1) td.classList.add("definition");
+        if (idx === 2) td.classList.add("score");
+      });
+      tbody.appendChild(tr);
+    });
+
+    tbl.appendChild(thead);
+    tbl.appendChild(tbody);
+    wrap.appendChild(tbl);
+    return wrap;
+  }
+
+  /* =========================================================
+     PANEL BUILD
+  ========================================================= */
   function buildPanel(topic) {
-    thumbGrid.innerHTML = "";
-    clearMediaContainerClasses();
+    clearMedia();
+
+    if (!thumbGrid) return;
 
     if (topic.table) {
-      thumbGrid.classList.add("is-single");
-      thumbGrid.appendChild(buildTaskTable(topic.table));
+      thumbGrid.classList.add("is-table");
+      thumbGrid.appendChild(buildTable(topic.table));
       return;
     }
 
-    const safeImages = Array.isArray(topic.images) ? topic.images.filter(Boolean) : [];
+    const safeImages = Array.isArray(topic.images) ? topic.images : [];
     const count = safeImages.length;
 
     if (count > 1) {
@@ -415,9 +439,8 @@
         new bootstrap.Carousel(carousel, {
           interval: false,
           ride: false,
-          pause: false,
           wrap: true,
-          touch: true
+          touch: true,
         });
       } catch (e) {}
       return;
@@ -432,77 +455,33 @@
     thumbGrid.classList.add("is-empty");
   }
 
-  /* =========================
-     TOPIC SWITCH
-  ========================= */
-  function setTopic(topicId) {
-    const topic = topics.find(t => t.id === topicId);
-    if (!topic) return;
-
-    currentTopicId = topicId;
-
-    menuList.querySelectorAll(".lesson-menu-item").forEach(item => {
-      item.classList.toggle("is-active", item.getAttribute("data-topic-id") === topicId);
-    });
-
-    contentHeading.textContent = topic.heading || "";
-
-    renderBullets(topic);
-    buildPanel(topic);
-  }
-
-  /* =========================
-     LIGHTBOX
-  ========================= */
-  function openLightbox(imgData) {
-    lightboxImage.classList.remove("is-visible");
-    lightboxImage.src = "";
-    lightboxImage.alt = "";
-
-    lightboxTitle.textContent = imgData.title || "Image";
-    lightboxCaption.textContent = imgData.alt || imgData.title || "";
-
-    lightbox.classList.add("is-visible");
-    lightbox.setAttribute("aria-hidden", "false");
-
-    const loader = new Image();
-    loader.onload = () => {
-      lightboxImage.src = imgData.src;
-      lightboxImage.alt = imgData.alt || imgData.title || "";
-      requestAnimationFrame(() => lightboxImage.classList.add("is-visible"));
-    };
-    loader.src = imgData.src;
-  }
-
-  function closeLightbox() {
-    lightbox.classList.remove("is-visible");
-    lightbox.setAttribute("aria-hidden", "true");
-    lightboxImage.classList.remove("is-visible");
-  }
-
-  /* =========================
-     MENU
-  ========================= */
+  /* =========================================================
+     MENU BUILD (matches CSS wrapper structure)
+  ========================================================= */
   function buildMenu() {
+    if (!menuList) return;
+
     const frag = document.createDocumentFragment();
-    topics.forEach((topic, index) => {
+
+    topics.forEach((topic, idx) => {
       const li = document.createElement("li");
-      li.className = "lesson-menu-item" + (index === 0 ? " is-active" : "");
+      li.className = "lesson-menu-item" + (idx === 0 ? " is-active" : "");
       li.setAttribute("data-topic-id", topic.id);
 
-      const iconContainer = document.createElement("span");
-      iconContainer.className = "lesson-menu-icon";
+      const iconWrap = document.createElement("span");
+      iconWrap.className = "lesson-menu-icon";
 
       const icon = document.createElement("img");
       icon.src = topic.imagePath;
       icon.alt = "";
-      iconContainer.appendChild(icon);
+      iconWrap.appendChild(icon);
 
       const label = document.createElement("span");
       label.textContent = topic.label;
 
-      li.appendChild(iconContainer);
+      li.appendChild(iconWrap);
       li.appendChild(label);
+
       li.addEventListener("click", () => setTopic(topic.id));
 
       frag.appendChild(li);
@@ -512,29 +491,56 @@
     menuList.appendChild(frag);
   }
 
-  /* =========================
-     EVENTS
-  ========================= */
-  startBriefBtn.addEventListener("click", () => {
-    pageSplash.classList.remove("is-active");
-    pageLesson.classList.add("is-active");
-    setTopic(currentTopicId);
-  });
+  /* =========================================================
+     TOPIC SWITCH
+  ========================================================= */
+  function setTopic(topicId) {
+    const topic = topics.find((t) => t.id === topicId);
+    if (!topic) return;
 
-  // Close lightbox: X, image, or anywhere in the image area
-  lightboxClose.addEventListener("click", closeLightbox);
-  lightboxImage.addEventListener("click", closeLightbox);
-  lightboxImageWrap.addEventListener("click", closeLightbox);
+    currentTopicId = topicId;
 
-  // Keep overlay click-to-close
-  lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
+    if (menuList) {
+      menuList.querySelectorAll(".lesson-menu-item").forEach((item) => {
+        item.classList.toggle("is-active", item.getAttribute("data-topic-id") === topicId);
+      });
+    }
 
+    if (contentHeading) contentHeading.textContent = topic.heading || "";
+    renderBullets(topic);
+    buildPanel(topic);
+  }
+
+  /* =========================================================
+     SPLASH START
+  ========================================================= */
+  if (startBriefBtn) {
+    startBriefBtn.addEventListener("click", () => {
+      if (pageSplash) pageSplash.classList.remove("is-active");
+      if (pageLesson) pageLesson.classList.add("is-active");
+      setTopic(currentTopicId);
+    });
+  }
+
+  /* =========================================================
+     LIGHTBOX CLOSE HANDLERS (POC)
+  ========================================================= */
+  if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
+  if (lightboxImage) lightboxImage.addEventListener("click", closeLightbox);
+  if (lightboxImageWrap) lightboxImageWrap.addEventListener("click", closeLightbox);
+  if (lightbox) {
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+  }
   document.addEventListener("keydown", (e) => {
-    if (!lightbox.classList.contains("is-visible")) return;
+    if (!lightbox || !lightbox.classList.contains("is-visible")) return;
     if (e.key === "Escape") closeLightbox();
   });
 
-  /* INIT */
+  /* =========================================================
+     INIT
+  ========================================================= */
   buildMenu();
-  setTopic(currentTopicId);
+  if (currentTopicId) setTopic(currentTopicId);
 })();
