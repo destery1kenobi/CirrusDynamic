@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Lesson 6 – Pre-Brief (1 hour)</title>
+  <title>Lesson 7</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,28 +14,33 @@
   <div class="app-shell">
 
     <header class="brand-bar-top">
-  <div class="brand-bar-title" id="lessonNumber"></div>
+      <div class="brand-bar-title" id="lessonNumber"></div>
 
-  <div class="brand-logo">
-    <img src="assets/images/logo.png" alt="Cirrus Logo" class="brand-logo-img">
-  </div>
-</header>
-
+      <!-- Cirrus Logo (restored, standardized placement) -->
+      <div class="brand-logo">
+        <img src="assets/images/Cirrus_Logo.png" alt="Cirrus Logo" class="brand-logo-img">
+      </div>
+    </header>
 
     <main>
+      <!-- SPLASH -->
       <section class="page page-splash is-active" id="pageSplash">
         <div class="splash-inner">
           <div>
-            <p class="splash-subtitle" id="lessonSubtitle"></p>
+            <!-- No subtitle for Lesson 7 -->
             <div class="splash-actions">
-              <button type="button" class="btn-primary" id="startBriefBtn">Start the Brief</button>
+              <button type="button" class="btn-primary" id="startBriefBtn">
+                Start the Brief
+              </button>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- LESSON CONTENT -->
       <section class="page page-lesson" id="pageLesson">
         <div class="lesson-layout">
+
           <nav class="lesson-menu">
             <div class="lesson-menu-heading">Briefing Topics</div>
             <ul class="lesson-menu-list" id="lessonMenuList"></ul>
@@ -46,13 +51,16 @@
             <ul class="lesson-bullets" id="contentBullets"></ul>
             <div class="media-container" id="thumbGrid"></div>
           </section>
+
         </div>
       </section>
     </main>
 
+    <!-- Bottom navy spacer (intentional design anchor) -->
     <footer class="brand-bar-bottom"></footer>
   </div>
 
+  <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
     <div class="lightbox-inner">
       <div class="lightbox-top">
