@@ -260,13 +260,15 @@ main {
   color: var(--cirrus-navy);
 }
 
-.lesson-menu-list { list-style: none; margin: 0; padding: 0; }
+.lesson-menu-list { 
+  list-style: none; 
+  margin: 0; 
+  padding: 0; 
+}
 
 .lesson-menu-item {
   --glow-color: var(--cirrus-blue);
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: block;
   padding: 10px 18px;
   margin: 2px 10px;
   font-size: 14px;
@@ -280,6 +282,18 @@ main {
               transform var(--transition-fast);
 }
 
+/* text wrap fix */
+.lesson-menu-item .menu-verb{
+  font-weight:700;
+  margin-right:6px;
+}
+
+.lesson-menu-item .menu-rest{
+  display:inline-block;
+  line-height:1.35;
+  text-indent:-7.2ch;
+  padding-left:7.2ch;
+}
 /* =========================================================
    MENU VERB STYLING (INLINE, NO SIZE CHANGE)
 ========================================================= */
