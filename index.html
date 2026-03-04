@@ -1,86 +1,128 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Lesson 1 – Airplane Lesson: Welcome to Cirrus Life</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-        crossorigin="anonymous">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="styles.css" />
+<title>Lesson</title>
+
+<link rel="stylesheet" href="styles.css">
+
+<!-- Bootstrap for carousel -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <body>
-  <div class="app-shell">
-    <header class="brand-bar-top">
-  <div class="brand-bar-title" id="lessonNumber"></div>
 
-  <!-- Optional: set BRAND.LOGO_FILE in app.js to enable -->
-  <div class="brand-logo" aria-label="Cirrus logo">
-    <img class="brand-logo-img" id="brandLogoImg" alt="Cirrus" />
+<!-- =========================================================
+SPLASH PAGE
+========================================================= -->
+
+<div id="pageSplash" class="page is-active">
+
+  <div class="splash-container">
+
+    <div class="splash-content">
+
+      <h1 id="lessonNumber">Lesson</h1>
+      <p id="lessonSubtitle"></p>
+
+      <button id="startBriefBtn" class="btn-start">
+        Start Lesson
+      </button>
+
+    </div>
+
   </div>
-</header>
 
-    <main>
-      <section class="page page-splash is-active" id="pageSplash" aria-label="Lesson 1 splash">
-        <div class="splash-inner">
-          <div>
-            <p class="splash-subtitle">
-              <strong>Airplane Lesson:</strong> Welcome to Cirrus Life
-            </p>
-            <div class="splash-actions">
-              <button type="button" class="btn-primary" id="startBriefBtn">Start the Brief</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="page page-lesson" id="pageLesson" aria-label="Lesson 1 brief">
-        <div class="lesson-layout">
-          <nav class="lesson-menu" aria-label="Briefing topics">
-            <div class="lesson-menu-heading">Briefing Topics</div>
-            <ul class="lesson-menu-list" id="lessonMenuList"></ul>
-          </nav>
-
-          <section class="lesson-content" aria-live="polite">
-            <h2 class="lesson-content-heading" id="contentHeading"></h2>
-            <ul class="lesson-bullets" id="contentBullets"></ul>
-            <div class="media-container" id="thumbGrid"></div>
-          </section>
-        </div>
-      </section>
-    </main>
-
-    <footer class="brand-bar-bottom">
-      <div class="brand-bar-title"></div>
-      
-      <div class="brand-logo">
-  <!-- ...logo img + fallback text... -->
 </div>
 
-    </footer>
+
+<!-- =========================================================
+LESSON PAGE
+========================================================= -->
+
+<div id="pageLesson" class="page">
+
+  <div class="lesson-layout">
+
+    <!-- LEFT MENU -->
+
+    <aside class="lesson-sidebar">
+
+      <ul id="lessonMenuList" class="lesson-menu">
+      </ul>
+
+    </aside>
+
+
+    <!-- CONTENT -->
+
+    <main class="lesson-content">
+
+      <h2 id="contentHeading"></h2>
+
+      <ul id="contentBullets" class="content-bullets">
+      </ul>
+
+    </main>
+
+
+    <!-- MEDIA PANEL -->
+
+    <section class="lesson-media">
+
+      <div id="thumbGrid" class="thumb-grid">
+      </div>
+
+    </section>
+
   </div>
 
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <div class="lightbox-inner" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
-      <div class="lightbox-top">
-        <div id="lightboxTitle">Image</div>
-        <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close fullscreen">×</button>
-      </div>
-      <div class="lightbox-image-wrap">
-        <img id="lightboxImage" src="" alt="">
-      </div>
-      <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+
+
+<!-- =========================================================
+LIGHTBOX
+========================================================= -->
+
+<div id="lightbox" class="lightbox">
+
+  <div class="lightbox-content">
+
+    <button id="lightboxClose" class="lightbox-close">
+      ✕
+    </button>
+
+    <div class="lightbox-image-wrap">
+
+      <img id="lightboxImage" src="" alt="">
+
     </div>
+
+    <div id="lightboxTitle" class="lightbox-title"></div>
+
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-          crossorigin="anonymous"></script>
+</div>
 
-  <script src="app.js"></script>
+
+
+<!-- =========================================================
+SCRIPTS
+========================================================= -->
+
+<!-- Bootstrap JS (carousel functionality) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Lesson content -->
+<script src="lesson-data.js"></script>
+
+<!-- App logic -->
+<script src="app.js"></script>
+
 </body>
 </html>
