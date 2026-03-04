@@ -2,78 +2,85 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Lesson 7</title>
+  <title>Lesson 1 – Airplane Lesson: Welcome to Cirrus Life</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
   <div class="app-shell">
-
     <header class="brand-bar-top">
-      <div class="brand-bar-title" id="lessonNumber"></div>
+  <div class="brand-bar-title" id="lessonNumber"></div>
 
-      <!-- Cirrus Logo (restored, standardized placement) -->
-      <div class="brand-logo">
-        <img src="assets/images/Cirrus_Logo.png" alt="Cirrus Logo" class="brand-logo-img">
-      </div>
-    </header>
+  <!-- Optional: set BRAND.LOGO_FILE in app.js to enable -->
+  <div class="brand-logo" aria-label="Cirrus logo">
+    <img class="brand-logo-img" id="brandLogoImg" alt="Cirrus" />
+  </div>
+</header>
 
     <main>
-      <!-- SPLASH -->
-      <section class="page page-splash is-active" id="pageSplash">
+      <section class="page page-splash is-active" id="pageSplash" aria-label="Lesson 1 splash">
         <div class="splash-inner">
           <div>
-            <!-- No subtitle for Lesson 7 -->
+            <p class="splash-subtitle">
+              <strong>Airplane Lesson:</strong> Welcome to Cirrus Life
+            </p>
             <div class="splash-actions">
-              <button type="button" class="btn-primary" id="startBriefBtn">
-                Start the Brief
-              </button>
+              <button type="button" class="btn-primary" id="startBriefBtn">Start the Brief</button>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- LESSON CONTENT -->
-      <section class="page page-lesson" id="pageLesson">
+      <section class="page page-lesson" id="pageLesson" aria-label="Lesson 1 brief">
         <div class="lesson-layout">
-
-          <nav class="lesson-menu">
+          <nav class="lesson-menu" aria-label="Briefing topics">
             <div class="lesson-menu-heading">Briefing Topics</div>
             <ul class="lesson-menu-list" id="lessonMenuList"></ul>
           </nav>
 
-          <section class="lesson-content">
+          <section class="lesson-content" aria-live="polite">
             <h2 class="lesson-content-heading" id="contentHeading"></h2>
             <ul class="lesson-bullets" id="contentBullets"></ul>
             <div class="media-container" id="thumbGrid"></div>
           </section>
-
         </div>
       </section>
     </main>
 
-    <!-- Bottom navy spacer (intentional design anchor) -->
-    <footer class="brand-bar-bottom"></footer>
+    <footer class="brand-bar-bottom">
+      <div class="brand-bar-title"></div>
+      
+      <div class="brand-logo">
+  <!-- ...logo img + fallback text... -->
+</div>
+
+    </footer>
   </div>
 
-  <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox">
-    <div class="lightbox-inner">
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-inner" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
       <div class="lightbox-top">
-        <div id="lightboxTitle"></div>
-        <button type="button" class="lightbox-close" id="lightboxClose">×</button>
+        <div id="lightboxTitle">Image</div>
+        <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close fullscreen">×</button>
       </div>
       <div class="lightbox-image-wrap">
         <img id="lightboxImage" src="" alt="">
       </div>
+      <div class="lightbox-caption" id="lightboxCaption"></div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+          crossorigin="anonymous"></script>
+
   <script src="app.js"></script>
 </body>
 </html>

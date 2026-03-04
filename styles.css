@@ -81,7 +81,7 @@ body {
 
 .brand-logo-img {
   /* PNG logo sizing for footer (and future reuse) */
-  height: 35px;
+  height: 28px;
   width: auto;
   display: block;
 }
@@ -251,6 +251,19 @@ main {
               transform var(--transition-fast);
 }
 
+/* =========================================================
+   MENU VERB STYLING (INLINE, NO SIZE CHANGE)
+========================================================= */
+.lesson-menu-item .menu-verb {
+  color: var(--cirrus-blue);
+  font-weight: 800;
+}
+
+.lesson-menu-item .menu-rest {
+  color: var(--text-main);
+  font-weight: 400;
+}
+
 .lesson-menu-item:hover {
   background-color: rgba(58,143,239,0.06);
   border-color: var(--glow-color);
@@ -273,8 +286,8 @@ main {
 }
 
 .lesson-menu-icon {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -307,6 +320,12 @@ main {
   font-size: 16px;
   font-weight: 700;
   color: var(--cirrus-navy);
+}
+
+.lesson-content-heading .title-verb {
+  color: var(--cirrus-blue);
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
 /* =========================================================
@@ -397,15 +416,9 @@ main {
 /* Image wrapper */
 .thumb-image-wrap {
   position: relative;
-  background: #000;
+  background: #ffffff;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-}
-
-/* CHANGE: make non-expanded images a little bigger (taller) */
-.media-container.is-carousel .thumb-image-wrap,
-.media-container.is-single .thumb-image-wrap {
-  aspect-ratio: 16 / 8.5;
 }
 
 /* Carousel structure */
@@ -416,14 +429,14 @@ main {
   overflow: hidden;
 }
 
-.media-container.is-carousel .carousel-item { background: #000; }
+.media-container.is-carousel .carousel-item { background: #ffffff; }
 
 /* Shared image behavior */
 .media-container.is-carousel img,
 .media-container.is-single img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -464,7 +477,7 @@ main {
 .media-container.is-single .single-hero {
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: #000;
+  background: #ffffff;
   position: relative;
 }
 
@@ -504,22 +517,6 @@ main {
   align-items: center;
   justify-content: center;
 }
-/* Indicator visibility: shadow only (preserves exact dot shape) */
-.media-container.is-carousel .carousel-indicators [data-bs-target] {
-  box-shadow: none; /* ensure we don't get the droplet effect */
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
-}
-/* When there are no bullets, center the media area vertically (keep heading in place) */
-.lesson-content.no-bullets .media-container.is-carousel,
-.lesson-content.no-bullets .media-container.is-single {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 0; /* prevents extra top push when bullets are empty */
-}
-
-
 
 /* =========================================================
    TASK MATRIX TABLE
@@ -697,3 +694,75 @@ table.task-table {
 .task-table { min-width: 720px; }
 
 .splash-lesson-wordmark { display: none; }
+
+/* =========================================================
+   CAROUSEL CONTROLS (below image)
+========================================================= */
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 12px;
+  user-select: none;
+}
+
+/* Override Bootstrap's absolute indicator positioning when used below */
+.carousel-controls .carousel-indicators {
+  position: static;
+  margin: 0;
+}
+
+.carousel-controls .carousel-indicators [data-bs-target] {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0.6;
+  background-color: rgba(15,36,56,0.25);
+  border: 0;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+}
+
+.carousel-controls .carousel-indicators .active {
+  opacity: 1;
+  background-color: rgba(58,143,239,0.95);
+}
+
+.carousel-nav-btn {
+  border: 0;
+  background: transparent;
+  color: var(--cirrus-blue);
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  cursor: pointer;
+}
+
+.carousel-nav-btn:hover {
+  background-color: rgba(58,143,239,0.10);
+  transform: translateY(-1px);
+}
+
+.carousel-nav-btn:active {
+  transform: translateY(0);
+}
+
+.carousel-nav-btn svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* When there are no bullets, center the media area vertically (keeps heading in place) */
+.lesson-content.no-bullets .media-container.is-carousel,
+.lesson-content.no-bullets .media-container.is-single {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+}

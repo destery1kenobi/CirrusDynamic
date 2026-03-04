@@ -1,135 +1,22 @@
-/**
- * Cirrus Lesson Module — Single-File Baseline (Team-Grade)
- * --------------------------------------------------------
- * CONTENT-ONLY CHANGES:
- *  - LESSON (number/subtitle)
- *  - TOPICS_RAW (topic data + filenames)
- * Everything else is locked baseline behavior.
- */
-
 (function () {
   "use strict";
 
   /* =========================================================
-    LESSON META (CONTENT ONLY)
+     LESSON METADATA (Option 1)
+     - Keeps lesson number + subtitle centralized
+     - Prevents storage collisions across lessons
   ========================================================= */
   const LESSON = {
-    number: 7,
-    subtitle: "", // Per your direction: no splash subtitle for Lesson 7
+    number: 1,
+    subtitle: "",
   };
 
-  /* =========================================================
-    TOPICS (CONTENT ONLY) — Lesson 7
-    Filenames below match your screenshot naming (underscores, parentheses).
-    Missing filename in screenshot => uses Awaiting Content.jpg placeholder.
-  ========================================================= */
-  const TOPICS_RAW = [
-    {
-      id: "fuel-system",
-      label: "Fuel System",
-      iconKey: "DESCRIBE",
-      heading: "Fuel System",
-      bullets: [],
-      images: [
-        "Fuel_System_Purpose(SR20).png",
-        "Fuel_System(SR20).png",
-        "CAS_Fuel_Advisories.png",
-        "CAS_Fuel_Cautions.png",
-        "CAS_Fuel_Warnings.png",
-      ],
-    },
-
-    {
-      id: "calculating-fuel-requirements",
-      label: "Calculating Fuel Requirements",
-      iconKey: "REFERENCE",
-      heading: "Calculating Fuel Requirements",
-      bullets: ["FAR/AIM", "POH/AFM", "Cirrus Standards"],
-      images: [
-        "VFR_Fuel_Requirements.png",
-        "Time_Fuel_Distance_to_Climb(SR20).png",
-        "Range_Endurance_Profile(SR20).png",
-      ],
-    },
-
-    {
-      id: "electrical-system",
-      label: "Electrical System",
-      iconKey: "DESCRIBE",
-      heading: "Electrical System",
-      bullets: [],
-      images: [
-        "Electrical_System_Purpose(SR20).png",
-        "Electrical_System(SR20).png",
-        "Main_Bus_Cautions.png",
-        "Alternator_Cautions.png",
-        "Battery_Cautions.png",
-        "Main_Bus_Warnings.png",
-        "CAS_Essential_Bus_Warning.png",
-        "Electrical_System_Limitations(SR20).png",
-      ],
-    },
-
-    {
-      id: "avionics-system",
-      label: "Avionics System",
-      iconKey: "DESCRIBE",
-      heading: "Avionics System",
-      bullets: [],
-      images: [
-        "Avionics_Purpose.png",
-        "Avionics_Components(SR20)(1).png",
-        "Avionics_Components(SR20)(2).png",
-        "Avionics_Limitations.png",
-        "Avionics_Cautions.png",
-      ],
-    },
-
-    {
-      id: "types-of-cas-annunciators",
-      label: "Types of CAS Annunciators",
-      iconKey: "DIFFERENTIATE",
-      heading: "Types of CAS Annunciators",
-      bullets: [],
-      images: [
-        "CAS_Fuel_Advisories.png",
-        "Advisory_Message_Guidance.png",
-        "CAS_Fuel_Cautions.png",
-        "Caution_Message_Guidance.png",
-        "Awaiting Content.jpg", // Placeholder for Fuel Imbalance Caution Procedure (SR20)
-        "CAS_Essential_Bus_Warning.png",
-        "Warning_Message_Guidance.png",
-        "Essential_Bus_Warning_Procedure(SR20)(1).png",
-        "Essential_Bus_Warning_Procedure(SR20)(2).png",
-      ],
-    },
-
-    {
-      id: "cas-annunciators",
-      label: "CAS Annunciators",
-      iconKey: "DESCRIBE",
-      heading: "CAS Annunciators",
-      bullets: [],
-      images: [
-        "CAS_Fuel_Advisories.png",
-        "Advisory_Message_Guidance.png",
-        "CAS_Fuel_Cautions.png",
-        "Caution_Message_Guidance.png",
-        "Awaiting Content.jpg", // Placeholder for Fuel Imbalance Caution Procedure (SR20)
-        "CAS_Essential_Bus_Warning.png",
-        "Warning_Message_Guidance.png",
-        "Essential_Bus_Warning_Procedure(SR20)(1).png",
-        "Essential_Bus_Warning_Procedure(SR20)(2).png",
-      ],
-    },
-  ];
-
-  /* =========================================================
-    BASELINE CONFIG (DO NOT EDIT)
-  ========================================================= */
   const STORAGE_PREFIX = `lesson${LESSON.number}_check_`;
+
+  // Path helper (all images live here)
   const img = (file) => `assets/images/${file}`;
 
+  // Icon mapping (unused in the new workflow, but retained for compatibility)
   const ICON = {
     BRIEF: "Brief.png",
     DETERMINE: "Determine.png",
@@ -138,52 +25,140 @@
     DESCRIBE: "Describe.png",
     PREVIEW: "Preview.png",
     REVIEW: "Review.png",
-
-    // Temporary mappings so Lesson 7 doesn't break.
-    // If/when you add these files to assets/images, update these two lines:
-    REFERENCE: "Discuss.png",
-    DIFFERENTIATE: "Discuss.png",
   };
 
+  // Title derived from filename (no captions shown; title used in lightbox bar)
   function titleFromFilename(filename) {
     if (!filename) return "";
     return filename.replace(/\.[^/.]+$/, "");
   }
 
   /* =========================================================
-    DOM HOOKS (DO NOT EDIT)
+     VERB STYLING (inline, no icons)
+     - Leading ALL CAPS token becomes the "verb"
+     - Verb is bold + Cirrus blue
+     - Rest of title remains default styling
   ========================================================= */
-  const pageSplash = document.getElementById("pageSplash");
-  const pageLesson = document.getElementById("pageLesson");
-  const startBriefBtn = document.getElementById("startBriefBtn");
+  function splitLeadingVerb(title) {
+    const raw = (title || "").trim();
+    if (!raw) return { verb: "", rest: "" };
 
-  const menuList = document.getElementById("lessonMenuList");
-  const contentHeading = document.getElementById("contentHeading");
-  const contentBullets = document.getElementById("contentBullets");
-  const thumbGrid = document.getElementById("thumbGrid");
+    const firstSpace = raw.indexOf(" ");
+    const token = firstSpace === -1 ? raw : raw.slice(0, firstSpace);
+    const rest = firstSpace === -1 ? "" : raw.slice(firstSpace + 1);
 
-  const lessonContent = document.querySelector(".lesson-content");
+    const isAllCaps = /^[A-Z0-9]+$/.test(token);
+    if (!isAllCaps) return { verb: "", rest: raw };
 
-  const lightbox = document.getElementById("lightbox");
-  const lightboxClose = document.getElementById("lightboxClose");
-  const lightboxImage = document.getElementById("lightboxImage");
-  const lightboxTitle = document.getElementById("lightboxTitle");
-  const lightboxImageWrap = lightbox ? lightbox.querySelector(".lightbox-image-wrap") : null;
+    return { verb: token, rest };
+  }
+
+  function renderHeadingText(node, text) {
+    if (!node) return;
+    node.innerHTML = "";
+
+    const { verb, rest } = splitLeadingVerb(text);
+    if (!verb) {
+      node.textContent = text || "";
+      return;
+    }
+
+    const verbSpan = document.createElement("span");
+    verbSpan.className = "title-verb";
+    verbSpan.textContent = verb;
+
+    const restSpan = document.createElement("span");
+    restSpan.textContent = rest ? " " + rest : "";
+
+    node.appendChild(verbSpan);
+    node.appendChild(restSpan);
+  }
 
   /* =========================================================
-    LESSON META INJECTION (DO NOT EDIT)
+     MENU LABEL RENDER
+     - Same verb styling rule as headings (blue + bold)
+     - Does NOT change font sizes; only uses inline spans
+  ========================================================= */
+  function renderMenuLabel(node, text) {
+    if (!node) return;
+    node.innerHTML = "";
+
+    const { verb, rest } = splitLeadingVerb(text);
+    if (!verb) {
+      node.textContent = text || "";
+      return;
+    }
+
+    const verbSpan = document.createElement("span");
+    verbSpan.className = "menu-verb";
+    verbSpan.textContent = verb;
+
+    const restSpan = document.createElement("span");
+    restSpan.className = "menu-rest";
+    restSpan.textContent = rest ? " " + rest : "";
+
+    node.appendChild(verbSpan);
+    node.appendChild(restSpan);
+  }
+
+  /* =========================================================
+     INJECT LESSON META INTO HTML
   ========================================================= */
   const elLessonNumber = document.getElementById("lessonNumber");
   const elLessonSubtitle = document.getElementById("lessonSubtitle");
+
   if (elLessonNumber) elLessonNumber.textContent = `Lesson ${LESSON.number}`;
   if (elLessonSubtitle) elLessonSubtitle.textContent = LESSON.subtitle;
 
   /* =========================================================
-    NORMALIZE TOPICS (DO NOT EDIT)
+     TOPICS – LESSON 1
+     - Headings now include the verb inline (DISCUSS/LIST/etc.)
+     - No captions; image titles derived from filename for lightbox title bar
   ========================================================= */
-  const topics = TOPICS_RAW.map((t) => ({
+  const topics = [
+    {
+      id: "private-pilot-certificate",
+      label: "DISCUSS Private Pilot Certificate",
+      heading: "DISCUSS Private Pilot Certificate",
+      bullets: ["Privileges", "Limitations"],
+      images: ["61.113 - slide"],
+    },
+    {
+      id: "required-documents",
+      label: "LIST Required Documents",
+      heading: "LIST Required Documents",
+      bullets: ["What documents are required to exercise private pilot privileges?"],
+      images: ["FAR 61.3- slide", "Figure1-6_ FAA Pilot Certificate", "ARROW"],
+    },
+    {
+      id: "medical-certificates",
+      label: "DISCUSS Medical Certificates",
+      heading: "DISCUSS Medical Certificates",
+      bullets: ["Process to obtain", "Different types", "Privileges", "Expiration"],
+      images: ["MedExpress", "Basic Med - What"],
+    },
+    {
+      id: "record-keeping-logbook",
+      label: "DESCRIBE Record keeping/logbook",
+      heading: "DESCRIBE Record keeping/logbook",
+      bullets: ["What are the requirements for currency?"],
+      images: ["CFR 61.51", "Pilot Logbook"],
+    },
+    {
+      id: "certification-requirements",
+      label: "LIST Certification Requirements",
+      heading: "LIST Certification Requirements",
+      bullets: ["What are the certificate requirements for a private pilot?"],
+      images: [
+        "PPP ACS",
+        "CFR 61.103 – slide",
+        "CFR 61.105- slide",
+        "CFR 61.107- slide",
+        "CFR 61. 109- slide",
+      ],
+    },
+  ].map((t) => ({
     ...t,
-    imagePath: img(ICON[t.iconKey] || ICON.DISCUSS),
     images: (t.images || []).map((file) => ({
       title: titleFromFilename(file),
       src: img(file),
@@ -192,60 +167,78 @@
     })),
   }));
 
+  /* =========================================================
+     DOM HOOKS
+  ========================================================= */
+  const els = {
+    pageSplash: document.getElementById("pageSplash"),
+    pageLesson: document.getElementById("pageLesson"),
+    startBriefBtn: document.getElementById("startBriefBtn"),
+
+    menuList: document.getElementById("lessonMenuList"),
+    contentHeading: document.getElementById("contentHeading"),
+    contentBullets: document.getElementById("contentBullets"),
+    thumbGrid: document.getElementById("thumbGrid"),
+
+    lightbox: document.getElementById("lightbox"),
+    lightboxClose: document.getElementById("lightboxClose"),
+    lightboxImage: document.getElementById("lightboxImage"),
+    lightboxTitle: document.getElementById("lightboxTitle"),
+  };
+
+  const lightboxImageWrap = els.lightbox ? els.lightbox.querySelector(".lightbox-image-wrap") : null;
+
   let currentTopicId = topics[0]?.id || "";
 
   /* =========================================================
-    UTILITIES (DO NOT EDIT)
+     HELPERS
   ========================================================= */
   function storageKey(topicId, idx) {
     return STORAGE_PREFIX + topicId + "_" + idx;
   }
 
-  function clearMedia() {
-    if (!thumbGrid) return;
-    thumbGrid.innerHTML = "";
-    thumbGrid.className = "media-container";
+  function setNoBulletsFlag(hasBullets) {
+    const panel = els.contentHeading?.closest(".lesson-content");
+    if (!panel) return;
+    panel.classList.toggle("no-bullets", !hasBullets);
   }
 
   /* =========================================================
-    BULLETS + CHECKLIST (DO NOT EDIT)
-     - Adds .no-bullets on .lesson-content when bullets are empty
+     BULLETS (default + optional checklist)
+     - No punctuation changes (verbatim)
   ========================================================= */
   function renderBullets(topic) {
-    if (!contentBullets) return;
+    if (!els.contentBullets) return;
 
-    contentBullets.innerHTML = "";
-    contentBullets.classList.remove("has-checklist");
-    contentBullets.classList.remove("is-single-column");
+    els.contentBullets.innerHTML = "";
+    els.contentBullets.classList.remove("has-checklist");
 
     const bullets = Array.isArray(topic.bullets) ? topic.bullets : [];
+    setNoBulletsFlag(bullets.length > 0);
 
-    if (lessonContent) lessonContent.classList.toggle("no-bullets", bullets.length === 0);
     if (!bullets.length) return;
-
-    const LONG_BULLET_THRESHOLD = 110;
-    const hasLongBullet = bullets.some((b) => (b || "").length > LONG_BULLET_THRESHOLD);
-    if (hasLongBullet) contentBullets.classList.add("is-single-column");
 
     const checklistLastN = Number.isFinite(topic.checklistLastN) ? Math.max(0, topic.checklistLastN) : 0;
     const checklistCount = Math.min(checklistLastN, bullets.length);
     const checklistStart = bullets.length - checklistCount;
 
     bullets.forEach((text, i) => {
+      // Normal bullet
       if (!checklistCount || i < checklistStart) {
         const li = document.createElement("li");
         li.textContent = text;
-        contentBullets.appendChild(li);
+        els.contentBullets.appendChild(li);
         return;
       }
 
-      contentBullets.classList.add("has-checklist");
+      // Checklist bullet
+      els.contentBullets.classList.add("has-checklist");
 
       if (i === checklistStart) {
         const headerLi = document.createElement("li");
         headerLi.className = "checklist-header";
         headerLi.textContent = (topic.checklistHeader || "CHECKLIST").toUpperCase();
-        contentBullets.appendChild(headerLi);
+        els.contentBullets.appendChild(headerLi);
       }
 
       const li = document.createElement("li");
@@ -273,65 +266,77 @@
 
       li.appendChild(input);
       li.appendChild(label);
-      contentBullets.appendChild(li);
+      els.contentBullets.appendChild(li);
     });
   }
-
   /* =========================================================
-    LIGHTBOX (DO NOT EDIT)
+     LIGHTBOX (title bar only; preview has no captions)
+     - Open by clicking image or fullscreen button
+     - Close by: X, clicking image, clicking image area, clicking backdrop, Esc
   ========================================================= */
   function openLightbox(imgData) {
-    if (!lightbox || !lightboxImage || !lightboxTitle) return;
+    if (!els.lightbox || !els.lightboxImage || !els.lightboxTitle) return;
 
-    lightboxTitle.textContent = imgData.title || "Image";
-    lightboxImage.classList.remove("is-visible");
-    lightboxImage.src = "";
-    lightboxImage.alt = imgData.alt || imgData.title || "";
+    els.lightboxTitle.textContent = imgData.title || "Image";
+    els.lightboxImage.classList.remove("is-visible");
+    els.lightboxImage.src = "";
+    els.lightboxImage.alt = imgData.alt || imgData.title || "";
 
-    lightbox.classList.add("is-visible");
+    els.lightbox.classList.add("is-visible");
 
     const pre = new Image();
     pre.onload = () => {
-      lightboxImage.src = imgData.src;
-      requestAnimationFrame(() => lightboxImage.classList.add("is-visible"));
+      els.lightboxImage.src = imgData.src;
+      requestAnimationFrame(() => els.lightboxImage.classList.add("is-visible"));
     };
     pre.onerror = () => {
-      lightboxImage.src = imgData.src;
-      requestAnimationFrame(() => lightboxImage.classList.add("is-visible"));
+      // Missing images will still attempt to load; console shows 404 (acceptable for placeholders)
+      els.lightboxImage.src = imgData.src;
+      requestAnimationFrame(() => els.lightboxImage.classList.add("is-visible"));
     };
     pre.src = imgData.src;
   }
 
   function closeLightbox() {
-    if (!lightbox || !lightboxImage) return;
-    lightbox.classList.remove("is-visible");
-    lightboxImage.classList.remove("is-visible");
+    if (!els.lightbox || !els.lightboxImage) return;
+    els.lightbox.classList.remove("is-visible");
+    els.lightboxImage.classList.remove("is-visible");
   }
 
   /* =========================================================
-    MEDIA: CAROUSEL (DO NOT EDIT)
+     MEDIA AREA
+     - Carousel when >1 images
+     - Single hero when 1 image
+     - Empty state hides media container
   ========================================================= */
-  function buildBootstrapCarousel(images, carouselId) {
+  function clearMedia() {
+    if (!els.thumbGrid) return;
+    els.thumbGrid.innerHTML = "";
+    els.thumbGrid.className = "media-container";
+  }
+
+  function chevronSvg(direction) {
+    // direction: "left" | "right"
+    const d =
+      direction === "left"
+        ? "M14.5 4.5L7.5 12l7 7.5"
+        : "M9.5 4.5L16.5 12l-7 7.5";
+    return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="${d}" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  }
+
+  function buildBootstrapCarousel(images) {
+    const carouselId = "topicCarousel";
+
+    // Carousel shell (touch/swipe enabled; no auto-advance)
     const carousel = document.createElement("div");
     carousel.id = carouselId;
     carousel.className = "carousel slide";
     carousel.setAttribute("data-bs-touch", "true");
 
-    const indicators = document.createElement("div");
-    indicators.className = "carousel-indicators";
-
     const inner = document.createElement("div");
     inner.className = "carousel-inner";
 
     images.forEach((imgData, index) => {
-      const ind = document.createElement("button");
-      ind.type = "button";
-      ind.setAttribute("data-bs-target", "#" + carouselId);
-      ind.setAttribute("data-bs-slide-to", String(index));
-      ind.setAttribute("aria-label", "Slide " + (index + 1));
-      if (index === 0) ind.classList.add("active");
-      indicators.appendChild(ind);
-
       const item = document.createElement("div");
       item.className = "carousel-item" + (index === 0 ? " active" : "");
 
@@ -343,6 +348,7 @@
       imageEl.src = imgData.src;
       imageEl.alt = imgData.alt || imgData.title || "Lesson image";
 
+      // Fullscreen button (bottom-right)
       const fsBtn = document.createElement("button");
       fsBtn.type = "button";
       fsBtn.setAttribute("aria-label", "Open fullscreen view");
@@ -352,37 +358,59 @@
         openLightbox(imgData);
       });
 
+      // Click image area => open lightbox
       wrap.addEventListener("click", () => openLightbox(imgData));
 
       wrap.appendChild(imageEl);
       wrap.appendChild(fsBtn);
-
       item.appendChild(wrap);
       inner.appendChild(item);
     });
 
+    carousel.appendChild(inner);
+
+    // Controls BELOW the image (arrows + dots)
+    const controls = document.createElement("div");
+    controls.className = "carousel-controls";
+
     const prev = document.createElement("button");
-    prev.className = "carousel-control-prev";
+    prev.className = "carousel-nav-btn";
     prev.type = "button";
     prev.setAttribute("data-bs-target", "#" + carouselId);
     prev.setAttribute("data-bs-slide", "prev");
     prev.setAttribute("aria-label", "Previous slide");
-    prev.innerHTML = '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+    prev.innerHTML = chevronSvg("left");
 
     const next = document.createElement("button");
-    next.className = "carousel-control-next";
+    next.className = "carousel-nav-btn";
     next.type = "button";
     next.setAttribute("data-bs-target", "#" + carouselId);
     next.setAttribute("data-bs-slide", "next");
     next.setAttribute("aria-label", "Next slide");
-    next.innerHTML = '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
+    next.innerHTML = chevronSvg("right");
 
-    carousel.appendChild(indicators);
-    carousel.appendChild(inner);
-    carousel.appendChild(prev);
-    carousel.appendChild(next);
+    const indicators = document.createElement("div");
+    indicators.className = "carousel-indicators";
 
-    return carousel;
+    images.forEach((_, index) => {
+      const ind = document.createElement("button");
+      ind.type = "button";
+      ind.setAttribute("data-bs-target", "#" + carouselId);
+      ind.setAttribute("data-bs-slide-to", String(index));
+      ind.setAttribute("aria-label", "Slide " + (index + 1));
+      if (index === 0) ind.classList.add("active");
+      indicators.appendChild(ind);
+    });
+
+    controls.appendChild(prev);
+    controls.appendChild(indicators);
+    controls.appendChild(next);
+
+    const wrapper = document.createElement("div");
+    wrapper.appendChild(carousel);
+    wrapper.appendChild(controls);
+
+    return { carousel, wrapper };
   }
 
   function buildSingleHero(imgData) {
@@ -405,17 +433,58 @@
       openLightbox(imgData);
     });
 
-    wrap.addEventListener("click", () => openLightbox(imgData));
-
     wrap.appendChild(imageEl);
     wrap.appendChild(fsBtn);
+
+    wrap.addEventListener("click", () => openLightbox(imgData));
 
     hero.appendChild(wrap);
     return hero;
   }
 
+  function buildPanel(topic) {
+    clearMedia();
+    if (!els.thumbGrid) return;
+
+    // Table feature preserved (not used in Lesson 1)
+    if (topic.table) {
+      // Existing behavior: render table in media area
+      els.thumbGrid.classList.add("is-table");
+      els.thumbGrid.appendChild(buildTable(topic.table));
+      return;
+    }
+
+    const safeImages = Array.isArray(topic.images) ? topic.images : [];
+    const count = safeImages.length;
+
+    if (count > 1) {
+      els.thumbGrid.classList.add("is-carousel");
+
+      const { carousel, wrapper } = buildBootstrapCarousel(safeImages);
+      els.thumbGrid.appendChild(wrapper);
+
+      try {
+        // Bootstraps the carousel without auto-advancing
+        new bootstrap.Carousel(carousel, {
+          interval: false,
+          ride: false,
+          wrap: true,
+          touch: true,
+        });
+      } catch (e) {}
+      return;
+    }
+
+    if (count === 1) {
+      els.thumbGrid.classList.add("is-single");
+      els.thumbGrid.appendChild(buildSingleHero(safeImages[0]));
+      return;
+    }
+
+    els.thumbGrid.classList.add("is-empty");
+  }
   /* =========================================================
-    OPTIONAL TABLE (DO NOT EDIT)
+     OPTIONAL TABLE (baseline completeness)
   ========================================================= */
   function buildTable(table) {
     const wrap = document.createElement("div");
@@ -439,9 +508,9 @@
       row.forEach((cell, idx) => {
         const td = document.createElement("td");
         td.textContent = cell;
-        tr.appendChild(td);
         if (idx === 1) td.classList.add("definition");
         if (idx === 2) td.classList.add("score");
+        tr.appendChild(td);
       });
       tbody.appendChild(tr);
     });
@@ -453,53 +522,10 @@
   }
 
   /* =========================================================
-    PANEL BUILD (DO NOT EDIT)
-  ========================================================= */
-  function buildPanel(topic) {
-    clearMedia();
-    if (!thumbGrid) return;
-
-    if (topic.table) {
-      thumbGrid.classList.add("is-table");
-      thumbGrid.appendChild(buildTable(topic.table));
-      return;
-    }
-
-    const safeImages = Array.isArray(topic.images) ? topic.images : [];
-    const count = safeImages.length;
-
-    if (count > 1) {
-      thumbGrid.classList.add("is-carousel");
-      const carouselId = `topicCarousel_${topic.id}`;
-      const carousel = buildBootstrapCarousel(safeImages, carouselId);
-      thumbGrid.appendChild(carousel);
-
-      try {
-        new bootstrap.Carousel(carousel, {
-          interval: false,
-          ride: false,
-          wrap: true,
-          touch: true,
-        });
-      } catch (e) {}
-
-      return;
-    }
-
-    if (count === 1) {
-      thumbGrid.classList.add("is-single");
-      thumbGrid.appendChild(buildSingleHero(safeImages[0]));
-      return;
-    }
-
-    thumbGrid.classList.add("is-empty");
-  }
-
-  /* =========================================================
-    MENU BUILD (DO NOT EDIT)
+     MENU (no icons)
   ========================================================= */
   function buildMenu() {
-    if (!menuList) return;
+    if (!els.menuList) return;
 
     const frag = document.createDocumentFragment();
 
@@ -508,31 +534,19 @@
       li.className = "lesson-menu-item" + (idx === 0 ? " is-active" : "");
       li.setAttribute("data-topic-id", topic.id);
 
-      const iconWrap = document.createElement("span");
-      iconWrap.className = "lesson-menu-icon";
-
-      const icon = document.createElement("img");
-      icon.src = topic.imagePath;
-      icon.alt = "";
-      iconWrap.appendChild(icon);
-
-      const label = document.createElement("span");
-      label.textContent = topic.label;
-
-      li.appendChild(iconWrap);
-      li.appendChild(label);
+      // Inline verb styling in menu label (no icon usage)
+      renderMenuLabel(li, topic.label);
 
       li.addEventListener("click", () => setTopic(topic.id));
-
       frag.appendChild(li);
     });
 
-    menuList.innerHTML = "";
-    menuList.appendChild(frag);
+    els.menuList.innerHTML = "";
+    els.menuList.appendChild(frag);
   }
 
   /* =========================================================
-    TOPIC SWITCH (DO NOT EDIT)
+     TOPIC SWITCH
   ========================================================= */
   function setTopic(topicId) {
     const topic = topics.find((t) => t.id === topicId);
@@ -540,48 +554,46 @@
 
     currentTopicId = topicId;
 
-    if (menuList) {
-      menuList.querySelectorAll(".lesson-menu-item").forEach((item) => {
+    if (els.menuList) {
+      els.menuList.querySelectorAll(".lesson-menu-item").forEach((item) => {
         item.classList.toggle("is-active", item.getAttribute("data-topic-id") === topicId);
       });
     }
 
-    if (contentHeading) contentHeading.textContent = topic.heading || "";
+    renderHeadingText(els.contentHeading, topic.heading || "");
     renderBullets(topic);
     buildPanel(topic);
   }
 
   /* =========================================================
-    SPLASH START (DO NOT EDIT)
+     SPLASH START
   ========================================================= */
-  if (startBriefBtn) {
-    startBriefBtn.addEventListener("click", () => {
-      if (pageSplash) pageSplash.classList.remove("is-active");
-      if (pageLesson) pageLesson.classList.add("is-active");
+  if (els.startBriefBtn) {
+    els.startBriefBtn.addEventListener("click", () => {
+      if (els.pageSplash) els.pageSplash.classList.remove("is-active");
+      if (els.pageLesson) els.pageLesson.classList.add("is-active");
       setTopic(currentTopicId);
     });
   }
 
   /* =========================================================
-    LIGHTBOX CLOSE HANDLERS (DO NOT EDIT)
+     LIGHTBOX CLOSE HANDLERS
   ========================================================= */
-  if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
-  if (lightboxImage) lightboxImage.addEventListener("click", closeLightbox);
+  if (els.lightboxClose) els.lightboxClose.addEventListener("click", closeLightbox);
+  if (els.lightboxImage) els.lightboxImage.addEventListener("click", closeLightbox);
   if (lightboxImageWrap) lightboxImageWrap.addEventListener("click", closeLightbox);
-
-  if (lightbox) {
-    lightbox.addEventListener("click", (e) => {
-      if (e.target === lightbox) closeLightbox();
+  if (els.lightbox) {
+    els.lightbox.addEventListener("click", (e) => {
+      if (e.target === els.lightbox) closeLightbox();
     });
   }
-
   document.addEventListener("keydown", (e) => {
-    if (!lightbox || !lightbox.classList.contains("is-visible")) return;
+    if (!els.lightbox || !els.lightbox.classList.contains("is-visible")) return;
     if (e.key === "Escape") closeLightbox();
   });
 
   /* =========================================================
-    INIT (DO NOT EDIT)
+     INIT
   ========================================================= */
   buildMenu();
   if (currentTopicId) setTopic(currentTopicId);
