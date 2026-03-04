@@ -1,113 +1,132 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<title>Lesson 1 – Private Pilot Certification</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<title>Lesson</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Bootstrap for carousel -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
 
 </head>
 
 <body>
 
-<!-- =========================================================
-SPLASH PAGE
-========================================================= -->
+<div class="app-shell">
 
-<div id="pageSplash" class="page is-active">
+<header class="brand-bar-top">
 
-  <div class="splash-container">
+<div class="brand-bar-title">Lesson 1</div>
 
-    <!-- Background Image -->
-    <div class="splash-background"></div>
+<div class="brand-logo">
+<span class="brand-logo-text">CIRRUS</span>
+</div>
 
-    <!-- Content -->
-    <div class="splash-content">
+</header>
 
-      <h1 id="lessonNumber">Lesson</h1>
-      <p id="lessonSubtitle"></p>
 
-      <button id="startBriefBtn" class="btn-start">
-        Start Lesson
-      </button>
+<main>
 
-    </div>
+<section class="page page-splash is-active" id="pageSplash">
 
-  </div>
+<div class="splash-inner">
+
+<div>
+
+<p class="splash-subtitle">
+<strong>Private Pilot Certification</strong>
+</p>
+
+<div class="splash-actions">
+<button type="button" class="btn-primary" id="startBriefBtn">
+Start the Brief
+</button>
+</div>
 
 </div>
 
-<!-- =========================================================
-LESSON PAGE
-========================================================= -->
+</div>
 
-<div id="pageLesson" class="page">
+</section>
 
-  <div class="lesson-layout">
 
-    <!-- LEFT MENU -->
-    <aside class="lesson-menu">
-      <ul id="lessonMenuList" class="lesson-menu-list"></ul>
-    </aside>
 
-    <!-- CONTENT -->
-    <main class="lesson-content">
-      <h2 id="contentHeading"></h2>
-      <ul id="contentBullets" class="lesson-bullets"></ul>
+<section class="page page-lesson" id="pageLesson">
 
-      <!-- MEDIA -->
-      <div id="thumbGrid" class="media-container"></div>
+<div class="lesson-layout">
 
-    </main>
+<nav class="lesson-menu">
 
-  </div>
+<div class="lesson-menu-heading">Briefing Topics</div>
+
+<ul class="lesson-menu-list" id="lessonMenuList"></ul>
+
+</nav>
+
+
+<section class="lesson-content">
+
+<h2 class="lesson-content-heading" id="contentHeading"></h2>
+
+<ul class="lesson-bullets" id="contentBullets"></ul>
+
+<div class="media-container" id="thumbGrid"></div>
+
+</section>
+
+</div>
+
+</section>
+
+</main>
+
+
+
+<footer class="brand-bar-bottom">
+
+<div class="brand-bar-title">Private Pilot Certification</div>
+
+<div class="brand-logo">
+<span class="brand-logo-text">CIRRUS</span>
+</div>
+
+</footer>
 
 </div>
 
 
-<!-- =========================================================
-LIGHTBOX
-========================================================= -->
 
-<div id="lightbox" class="lightbox">
+<div class="lightbox" id="lightbox">
 
-  <div class="lightbox-content">
+<div class="lightbox-inner">
 
-    <button id="lightboxClose" class="lightbox-close">
-      ✕
-    </button>
+<div class="lightbox-top">
 
-    <div class="lightbox-image-wrap">
+<div id="lightboxTitle">Image</div>
 
-      <img id="lightboxImage" src="" alt="">
+<button type="button" class="lightbox-close" id="lightboxClose">×</button>
 
-    </div>
+</div>
 
-    <div id="lightboxTitle" class="lightbox-title"></div>
+<div class="lightbox-image-wrap">
+<img id="lightboxImage" src="" alt="">
+</div>
 
-  </div>
+<div class="lightbox-caption" id="lightboxCaption"></div>
+
+</div>
 
 </div>
 
 
 
-<!-- =========================================================
-SCRIPTS
-========================================================= -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Bootstrap JS (carousel functionality) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Lesson content -->
 <script src="lesson-data.js"></script>
-
-<!-- App logic -->
 <script src="app.js"></script>
 
 </body>
