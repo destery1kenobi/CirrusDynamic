@@ -180,31 +180,35 @@ function buildBootstrapCarousel(images) {
 
   const inner = make("div", "carousel-inner");
 
-  images.forEach((imgData, index) => {
+images.forEach((imgData, index) => {
 
-    const item = make("div", "carousel-item" + (index === 0 ? " active" : ""));
+  const item = make("div", "carousel-item" + (index === 0 ? " active" : ""));
 
-    const wrap = make("div", "thumb-image-wrap");
+  const wrap = make("div", "thumb-image-wrap");
 
-    const imgEl = make("img", "d-block w-100");
-    imgEl.src = imgData.src;
-    imgEl.alt = imgData.alt || imgData.title || "Lesson image";
+  const imgEl = make("img", "d-block w-100");
+  imgEl.src = imgData.src;
+  imgEl.alt = imgData.alt || imgData.title || "Lesson image";
 
-    const fsBtn = make("button");
-    fsBtn.type = "button";
-    fsBtn.innerHTML = "<span>⤢</span>";
-    fsBtn.onclick = (e) => {
-      e.stopPropagation();
-      openLightbox(imgData);
-    };
+  /* click image to open lightbox */
+  imgEl.onclick = (e) => {
+    e.stopPropagation();
+    openLightbox(imgData);
+  };
 
-    wrap.onclick = () => openLightbox(imgData);
+  const fsBtn = make("button");
+  fsBtn.type = "button";
+  fsBtn.innerHTML = "<span>⤢</span>";
+  fsBtn.onclick = (e) => {
+    e.stopPropagation();
+    openLightbox(imgData);
+  };
 
-    wrap.append(imgEl, fsBtn);
-    item.appendChild(wrap);
-    inner.appendChild(item);
+  wrap.append(imgEl, fsBtn);
+  item.appendChild(wrap);
+  inner.appendChild(item);
 
-  });
+});
 
   carousel.appendChild(inner);
 
