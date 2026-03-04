@@ -143,7 +143,10 @@ function openLightbox(imgData) {
   els.lightboxImage.alt = imgData.alt || "";
 
   els.lightbox.classList.add("is-visible");
+console.log(imgData);
+
 }
+
 
 function closeLightbox() {
   if (!els.lightbox) return;
@@ -307,7 +310,11 @@ function buildPanel(topic) {
     const imageEl = document.createElement("img");
     imageEl.src = imgData.src;
 
-    wrap.onclick = () => openLightbox(imgData);
+    wrap.addEventListener("click", function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  openLightbox(imgData);
+});
 
     wrap.appendChild(imageEl);
     els.thumbGrid.appendChild(wrap);
