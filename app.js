@@ -116,56 +116,84 @@
      - No captions; image titles derived from filename for lightbox title bar
   ========================================================= */
   const topics = [
-    {
-      id: "private-pilot-certificate",
-      label: "DISCUSS Private Pilot Certificate",
-      heading: "DISCUSS Private Pilot Certificate",
-      bullets: ["Privileges", "Limitations"],
-      images: ["61.113 - slide"],
-    },
-    {
-      id: "required-documents",
-      label: "LIST Required Documents",
-      heading: "LIST Required Documents",
-      bullets: ["What documents are required to exercise private pilot privileges?"],
-      images: ["FAR 61.3- slide", "Figure1-6_ FAA Pilot Certificate", "ARROW"],
-    },
-    {
-      id: "medical-certificates",
-      label: "DISCUSS Medical Certificates",
-      heading: "DISCUSS Medical Certificates",
-      bullets: ["Process to obtain", "Different types", "Privileges", "Expiration"],
-      images: ["MedExpress", "Basic Med - What"],
-    },
-    {
-      id: "record-keeping-logbook",
-      label: "DESCRIBE Record keeping/logbook",
-      heading: "DESCRIBE Record keeping/logbook",
-      bullets: ["What are the requirements for currency?"],
-      images: ["CFR 61.51", "Pilot Logbook"],
-    },
-    {
-      id: "certification-requirements",
-      label: "LIST Certification Requirements",
-      heading: "LIST Certification Requirements",
-      bullets: ["What are the certificate requirements for a private pilot?"],
-      images: [
-        "PPP ACS",
-        "CFR 61.103 – slide",
-        "CFR 61.105- slide",
-        "CFR 61.107- slide",
-        "CFR 61. 109- slide",
-      ],
-    },
-  ].map((t) => ({
-    ...t,
-    images: (t.images || []).map((file) => ({
-      title: titleFromFilename(file),
-      src: img(file),
-      alt: titleFromFilename(file),
-      file,
-    })),
-  }));
+  {
+    id: "private-pilot-certificate",
+    label: "DISCUSS Private Pilot Certificate",
+    heading: "DISCUSS Private Pilot Certificate",
+    bullets: [
+      "Privileges",
+      "Limitations"
+    ],
+    images: [
+      "Private Pilot Certification Requirements.png",
+      "Private Pilot Limitations.png"
+    ]
+  },
+
+  {
+    id: "required-documents",
+    label: "LIST Required Documents",
+    heading: "LIST Required Documents",
+    bullets: [
+      "What documents are required to exercise private pilot privileges?"
+    ],
+    images: [
+      "FAA Pilot Certificate.png",
+      "ARROW.png"
+    ]
+  },
+
+  {
+    id: "medical-certificates",
+    label: "DISCUSS Medical Certificates",
+    heading: "DISCUSS Medical Certificates",
+    bullets: [
+      "Process to obtain",
+      "Different types",
+      "Privileges",
+      "Expiration"
+    ],
+    images: [
+      "Med Express.png",
+      "Basic Med What.png"
+    ]
+  },
+
+  {
+    id: "record-keeping-logbook",
+    label: "DESCRIBE Record keeping logbook",
+    heading: "DESCRIBE Record keeping logbook",
+    bullets: [
+      "What are the requirements for currency?"
+    ],
+    images: [
+      "Logbook Requirements.png",
+      "Pilot Logbook.png"
+    ]
+  },
+
+  {
+    id: "certification-requirements",
+    label: "LIST Certification Requirements",
+    heading: "LIST Certification Requirements",
+    bullets: [
+      "What are the certificate requirements for a private pilot?"
+    ],
+    images: [
+      "Aeronautical Knowledge Requirements.png",
+      "Eligibility Requirements.png",
+      "Flight Proficiency.png",
+      "Requirements Certificates.png"
+    ]
+  }
+].map(t => ({
+  ...t,
+  images: t.images.map(file => ({
+    src: img(file),
+    title: file.replace(/\.[^/.]+$/, ""),
+    alt: file.replace(/\.[^/.]+$/, "")
+  }))
+}));
 
   /* =========================================================
      DOM HOOKS
