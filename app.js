@@ -136,21 +136,42 @@ LIGHTBOX
 ========================================================= */
 
 function openLightbox(imgData) {
+
   if (!els.lightbox) return;
 
+  els.lightboxImage.classList.remove("is-visible");
+
+  els.lightboxImage.src = "";
+  els.lightboxImage.alt = "";
+
   els.lightboxTitle.textContent = imgData.title || "Image";
-  els.lightboxImage.src = imgData.src;
-  els.lightboxImage.alt = imgData.alt || "";
 
   els.lightbox.classList.add("is-visible");
-console.log(imgData);
+
+  setTimeout(() => {
+
+    els.lightboxImage.src = imgData.src;
+    els.lightboxImage.alt = imgData.alt || "";
+
+    els.lightboxImage.onload = () => {
+      els.lightboxImage.classList.add("is-visible");
+    };
+
+  }, 40);
 
 }
 
-
 function closeLightbox() {
+
   if (!els.lightbox) return;
+
   els.lightbox.classList.remove("is-visible");
+
+  if (els.lightboxImage) {
+    els.lightboxImage.classList.remove("is-visible");
+    els.lightboxImage.src = "";
+  }
+
 }
 
 /* =========================================================
