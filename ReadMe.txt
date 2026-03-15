@@ -208,3 +208,25 @@ briefing content system.
 
 For updates, enhancements, or production hardening,
 coordinate with the project maintainer.
+
+MENU WRAPPING BEHAVIOR
+
+Menu items begin with an ALL CAPS verb (DISCUSS, LIST, DESCRIBE, etc.).
+When the navigation column becomes narrow, some menu items may wrap
+onto two lines.
+
+The system uses a hanging indent technique so wrapped text remains
+aligned under the verb.
+
+Example:
+
+DISCUSS Private Pilot
+Certificate
+
+Rather than:
+
+DISCUSS Private Pilot
+   Certificate
+
+This ensures menu readability remains consistent across smaller
+viewports and embedded LMS iframe environments.
