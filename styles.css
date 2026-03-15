@@ -280,6 +280,13 @@ main {
               box-shadow var(--transition-fast),
               border-color var(--transition-fast),
               transform var(--transition-fast);
+/* default state */
+  transform: translateX(0);
+
+  transition: background-color var(--transition-fast),
+              box-shadow var(--transition-fast),
+              border-color var(--transition-fast),
+              transform var(--transition-fast);
 }
 
 /* text wrap fix */
@@ -308,24 +315,18 @@ main {
 }
 
 .lesson-menu-item:hover {
-  background-color: rgba(58,143,239,0.06);
-  border-color: var(--glow-color);
-  box-shadow:
-    0 0 0.4em 0.05em rgba(58,143,239,0.5),
-    0 0 1em 0.2em rgba(58,143,239,0.25),
-    inset 0 0 0.3em 0.05em rgba(223,236,255,0.6);
-  transform: translateY(-1px);
-}
+  background-color: rgba(58,143,239,0.08);
 
-.lesson-menu-item.is-active {
-  margin: 0;
-  border-radius: 2px;
-  padding: 10px 20px;
-  background-color: #e0edff;
-  font-weight: 600;
-  box-shadow: none;
-  border-color: transparent;
-  transform: none;
+}.lesson-menu-item.is-active {
+  transform: translateX(8px);
+
+  background-color: #ffffff;
+
+  border-color: var(--cirrus-blue);
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.03),
+    0 6px 14px rgba(0,0,0,0.06);
 }
 
 .lesson-menu-icon {
